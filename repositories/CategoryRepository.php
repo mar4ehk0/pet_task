@@ -17,7 +17,7 @@ class CategoryRepository
 
     public function findAll(): array
     {
-        if (!$categories = Category::findAll([])) {
+        if (!$categories = Category::find()->all()) {
             throw new NotFoundException('There are no rows.');
         }
 
