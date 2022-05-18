@@ -5,6 +5,22 @@ namespace app\models;
 use app\services\dto\UserDTO;
 use yii\db\ActiveRecord;
 
+/**
+ * This is the model class for table "tasks".
+ *
+ * @property int $id
+ * @property string $email
+ * @property string $name
+ * @property string $password
+ * @property string $birthday
+ * @property int $city_id
+ * @property string $avatar
+ * @property string $created
+ *
+ * @property Client $client
+ * @property Employee $employee
+ * @property City $city
+ */
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
 
@@ -61,6 +77,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function getEmployee()
     {
         return $this->hasOne(Employee::class, ['user_id' => 'id']);
+    }
+
+    public function getCity()
+    {
+        return $this->hasOne(City::class, ['id' => 'city_id']);
     }
 
     public function isEmployee(): bool
