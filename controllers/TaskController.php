@@ -5,18 +5,28 @@ namespace app\controllers;
 use app\forms\CreateTaskForm;
 use app\repositories\CategoryRepository;
 use app\repositories\CityRepository;
+use app\services\TaskService;
 
 class TaskController extends \yii\web\Controller
 {
 
     private CityRepository $cityRepository;
     private CategoryRepository $categoryRepository;
+    private TaskService $taskService;
 
-    public function __construct($id, $module, CityRepository $cityRepository, CategoryRepository $categoryRepository, $config = [])
+    public function __construct(
+        $id,
+        $module,
+        CityRepository $cityRepository,
+        CategoryRepository $categoryRepository,
+        TaskService $taskService,
+        $config = []
+    )
     {
         parent::__construct($id, $module, $config);
         $this->cityRepository = $cityRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->taskService = $taskService;
     }
 
     public function actionCreate()
@@ -25,7 +35,7 @@ class TaskController extends \yii\web\Controller
 
         $model = new CreateTaskForm($client_id, $this->cityRepository, $this->categoryRepository);
         if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-
+            $this->taskService->create($model);
         }
         return $this->render('create', [
             'model' => $model,
