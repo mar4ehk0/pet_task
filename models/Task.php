@@ -2,20 +2,25 @@
 
 namespace app\models;
 
+use app\services\dto\TaskAddressDTO;
+use app\services\dto\TaskRequiredPropertiesDTO;
 use Yii;
 
 /**
  * This is the model class for table "tasks".
  *
  * @property int $id
+ * @property string $title
+ * @property string $description
  * @property int $category_id
  * @property int $client_id
  * @property int|null $employee_id
  * @property int|null $city_id
  * @property string|null $location
+ * @property string|null $address
  * @property string|null $lat
  * @property string|null $long
- * @property int|null $is_remote
+ * @property int $is_remote
  * @property int|null $price
  * @property string $deadline
  * @property int $status
@@ -28,12 +33,49 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
+
+    public const STATUS_NEW = 0;
+    public const STATUS_CANCELED = 1;
+    public const STATUS_IN_WORK = 2;
+    public const STATUS_COMPLETED = 3;
+    public const STATUS_FAILED = 4;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'tasks';
+    }
+
+    public static function createRemote(TaskRequiredPropertiesDTO $dto): Task
+    {
+        $task = new self();
+        $task->title = $dto->title;
+        $task->description = $dto->description;
+        $task->category_id = $dto->category_id;
+        $task->client_id = $dto->client_id;
+        $task->employee_id = null;
+        $task->price = $dto->price;
+        $task->deadline = $dto->deadline;
+        $task->is_remote = $dto->is_remote;
+        $task->status = self::STATUS_NEW;
+        $task->created = (new \DateTime())->format('Y-m-d');
+        return $task;
+    }
+
+    public static function createDirect(
+        TaskRequiredPropertiesDTO $taskRequiredPropertiesDTO,
+        TaskAddressDTO $directTaskDTO
+    ): Task {
+        $task = self::createRemote($taskRequiredPropertiesDTO);
+        $task->location = $directTaskDTO->location;
+        $task->address = $directTaskDTO->address;
+        $task->city_id = $directTaskDTO->city_id;
+        $task->lat = $directTaskDTO->lat;
+        $task->long = $directTaskDTO->long;
+
+        return $task;
     }
 
     /**
