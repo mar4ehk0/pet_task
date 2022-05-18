@@ -68,6 +68,8 @@ class UserRegisterForm extends Model
             $this->addError($attribute, 'У нас работают только совершеннолетние.');
             return false;
         }
+
+        return true;
     }
 
     public function isAgeValid(): bool

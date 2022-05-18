@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "cities".
  *
+ * @property int $id
  * @property string $name
  * @property string $lat
  * @property string $long
