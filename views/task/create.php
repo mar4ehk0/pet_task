@@ -13,6 +13,7 @@ $this->title = 'Создание Задачи';
 $this->params['breadcrumbs'][] = $this->title;
 
 $statusDeadline = ViewHelper::isValidAttribute('deadline', $model)  ? '' : 'is-invalid';
+$statusPrice = ViewHelper::isValidAttribute('price', $model)  ? '' : 'is-invalid';
 
 $this->registerJs(
     "
@@ -44,8 +45,13 @@ $this->registerJs(
 
     <?= $form->field($model, 'title')->textInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'description')->textarea() ?>
-    <?= $form->field($model, 'category_id')->dropDownList($model->getCategoryList()) ?>
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'category_id')->dropDownList(
+            $model->getCategoryList(),
+            ['prompt' => '- Выбери категорию -']
+    ) ?>
+    <?= $form->field($model, 'price')->textInput(
+            [ 'options' => ['class' => 'col-5 form-control ' . $statusPrice],]
+    ) ?>
     <?= $form->field($model, 'deadline')
         ->widget(
             DatePicker::class,
@@ -61,6 +67,8 @@ $this->registerJs(
     <?= $form->field($model, 'city_id')->hiddenInput()->label('') ?>
     <?= $form->field($model, 'lat')->hiddenInput()->label('') ?>
     <?= $form->field($model, 'long')->hiddenInput()->label('') ?>
+
+    <h1> сюда еще нужен файл </h1>
 
     <div class="form-group">
         <div class="offset-5 col-5">
