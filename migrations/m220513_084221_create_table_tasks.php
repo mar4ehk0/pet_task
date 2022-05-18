@@ -31,7 +31,7 @@ class m220513_084221_create_table_tasks extends Migration
                 'address' => $this->string(),
                 'lat' => $this->string(100),
                 'long' => $this->string(100),
-                'is_remote' => $this->boolean(),
+                'is_remote' => $this->boolean()->notNull(),
                 'price' => $this->integer()->unsigned(),
                 'deadline' => $this->dateTime()->notNull(),
                 'status' => $this->integer()->notNull(),
@@ -55,7 +55,7 @@ class m220513_084221_create_table_tasks extends Migration
             '{{%tasks}}',
             ['client_id'],
             '{{%clients}}',
-            ['id'],
+            ['user_id'],
             'CASCADE',
             'NO ACTION'
         );
@@ -65,7 +65,7 @@ class m220513_084221_create_table_tasks extends Migration
             '{{%tasks}}',
             ['employee_id'],
             '{{%employees}}',
-            ['id'],
+            ['user_id'],
             'CASCADE',
             'NO ACTION'
         );
