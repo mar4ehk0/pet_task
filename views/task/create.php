@@ -8,6 +8,9 @@ use app\helpers\ViewHelper;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\jui\DatePicker;
+use app\assets\CreateTaskAsset;
+
+CreateTaskAsset::register($this);
 
 $this->title = 'Создание Задачи';
 $this->params['breadcrumbs'][] = $this->title;
