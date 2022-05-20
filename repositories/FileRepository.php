@@ -2,44 +2,47 @@
 
 namespace app\repositories;
 
-use app\models\Employee;
+use app\models\File;
 use app\repositories\exceptions\NotFoundException;
+use app\storages\FileStorage;
 
-class EmployeeRepository
+class FileRepository
 {
-    public function find(int $id): Employee
+
+    public function find(int $id): File
     {
-        if (!$employee = Employee::findOne($id)) {
+        if (!$file = File::findOne($id)) {
             throw new NotFoundException('Model not found.');
         }
-        return $employee;
+        return $file;
     }
 
-    public function add(Employee $employee): bool
+    public function add(File $file): bool
     {
-        if (!$employee->getIsNewRecord()) {
+        if (!$file->getIsNewRecord()) {
             throw new \RuntimeException('Adding existing model.');
         }
-        if (!$employee->insert(false)) {
+        if (!$file->insert(false)) {
             throw new \RuntimeException('Saving error.');
         }
+
         return true;
     }
 
-    public function save(Employee $employee): bool
+    public function save(File $file): bool
     {
-        if ($employee->getIsNewRecord()) {
+        if ($file->getIsNewRecord()) {
             throw new \RuntimeException('Saving new model.');
         }
-        if ($employee->update(false) === false) {
+        if ($file->update(false) === false) {
             throw new \RuntimeException('Saving error.');
         }
         return true;
     }
 
-    public function delete(Employee $employee): bool
+    public function delete(File $file): bool
     {
-        if (!$employee->delete()) {
+        if (!$file->delete()) {
             throw new \RuntimeException('Deleting error.');
         }
 

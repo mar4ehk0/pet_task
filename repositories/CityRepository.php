@@ -3,7 +3,7 @@
 namespace app\repositories;
 
 use app\models\City;
-use app\repository\exceptions\NotFoundException;
+use app\repositories\exceptions\NotFoundException;
 
 class CityRepository
 {

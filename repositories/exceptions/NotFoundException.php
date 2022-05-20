@@ -1,6 +1,6 @@
 <?php
 
-namespace app\repository\exceptions;
+namespace app\repositories\exceptions;
 
 class NotFoundException extends \DomainException
 {

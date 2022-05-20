@@ -8,23 +8,15 @@ use app\helpers\ViewHelper;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 use yii\jui\DatePicker;
+use app\assets\CreateTaskAsset;
+
+CreateTaskAsset::register($this);
 
 $this->title = 'Создание Задачи';
 $this->params['breadcrumbs'][] = $this->title;
 
 $statusDeadline = ViewHelper::isValidAttribute('deadline', $model)  ? '' : 'is-invalid';
 $statusPrice = ViewHelper::isValidAttribute('price', $model)  ? '' : 'is-invalid';
-
-$this->registerJs(
-    "
-        $('#createtaskform-is_remote').on('change', function() { 
-          if (this.checked) {
-            $('.field-createtaskform-location').hide();
-          } else {
-            $('.field-createtaskform-location').show();
-          } 
-        });"
-);
 
 ?>
 <div class="site-login">
@@ -63,12 +55,19 @@ $this->registerJs(
     ?>
     <?= $form->field($model, 'is_remote')->checkbox() ?>
     <?= $form->field($model, 'location')->textInput() ?>
+    <?= $form->field($model, 'files[]', ['template' => "<div class='custom-file'>{input}\n{label}</div>"])
+        ->fileInput(
+            [
+                'class' => 'custom-file-input',
+                'multiple' => true,
+            ]
+        )
+        ->label('Файлы', ['class' => 'custom-file-label'])
+    ?>
     <?= $form->field($model, 'address')->hiddenInput()->label('') ?>
     <?= $form->field($model, 'city_id')->hiddenInput()->label('') ?>
     <?= $form->field($model, 'lat')->hiddenInput()->label('') ?>
     <?= $form->field($model, 'long')->hiddenInput()->label('') ?>
-
-    <h1> сюда еще нужен файл </h1>
 
     <div class="form-group">
         <div class="offset-5 col-5">

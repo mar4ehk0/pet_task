@@ -6,6 +6,7 @@ use app\forms\CreateTaskForm;
 use app\repositories\CategoryRepository;
 use app\repositories\CityRepository;
 use app\services\TaskService;
+use Yii;
 
 class TaskController extends \yii\web\Controller
 {
@@ -36,9 +37,18 @@ class TaskController extends \yii\web\Controller
         $model = new CreateTaskForm($client_id, $this->cityRepository, $this->categoryRepository);
         if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
             $this->taskService->create($model);
+            Yii::$app->session->setFlash('success', 'Задача создана.');
+//            $this->redirect('task/view');
         }
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+//
+//    public function actionView()
+//    {
+//        return $this->render('view', [
+//            'model' => $model,
+//        ]);
+//    }
 }

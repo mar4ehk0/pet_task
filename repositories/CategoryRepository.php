@@ -3,7 +3,7 @@
 namespace app\repositories;
 
 use app\models\Category;
-use app\repository\exceptions\NotFoundException;
+use app\repositories\exceptions\NotFoundException;
 
 class CategoryRepository
 {
