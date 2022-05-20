@@ -8,6 +8,7 @@ use app\repositories\CategoryRepository;
 use app\repositories\CityRepository;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 class CreateTaskForm extends Model
 {
@@ -22,6 +23,7 @@ class CreateTaskForm extends Model
     public string $price = '';
     public string $deadline = '';
     public bool $is_remote = false;
+    public ?UploadedFile $files = null;
     public int $client_id;
 
     private CityRepository $cityRepository;
@@ -60,6 +62,11 @@ class CreateTaskForm extends Model
                 'targetAttribute' => ['city_id' => 'id']],
             ['deadline', 'guardIsActualDate', 'skipOnEmpty' => false, 'skipOnError' => false],
             ['price', 'guardIsValidPrice', 'skipOnEmpty' => false, 'skipOnError' => false],
+            [['files'],
+                'file',
+                'skipOnEmpty' => false,
+                'extensions' => 'png, jpg, pdf, txt, doc, docx',
+                'maxFiles' => 4],
         ];
     }
 
@@ -73,6 +80,7 @@ class CreateTaskForm extends Model
             'deadline' => 'Срок завершения',
             'is_remote' => 'Удаленная работа',
             'location' => 'Адрес',
+            'files' => 'Файлы',
         ];
     }
 
