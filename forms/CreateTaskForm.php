@@ -23,7 +23,7 @@ class CreateTaskForm extends Model
     public string $price = '';
     public string $deadline = '';
     public bool $is_remote = false;
-    public ?UploadedFile $files = null;
+    public ?array $files = null;
     public int $client_id;
 
     private CityRepository $cityRepository;
@@ -64,7 +64,7 @@ class CreateTaskForm extends Model
             ['price', 'guardIsValidPrice', 'skipOnEmpty' => false, 'skipOnError' => false],
             [['files'],
                 'file',
-                'skipOnEmpty' => false,
+                'skipOnEmpty' => true,
                 'extensions' => 'png, jpg, pdf, txt, doc, docx',
                 'maxFiles' => 4],
         ];

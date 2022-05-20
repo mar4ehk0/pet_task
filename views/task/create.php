@@ -55,7 +55,7 @@ $statusPrice = ViewHelper::isValidAttribute('price', $model)  ? '' : 'is-invalid
     ?>
     <?= $form->field($model, 'is_remote')->checkbox() ?>
     <?= $form->field($model, 'location')->textInput() ?>
-    <?= $form->field($model, 'files', ['template' => "<div class='custom-file'>{input}\n{label}</div>"])
+    <?= $form->field($model, 'files[]', ['template' => "<div class='custom-file'>{input}\n{label}</div>"])
         ->fileInput(
             [
                 'class' => 'custom-file-input',
