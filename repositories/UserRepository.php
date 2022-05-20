@@ -3,7 +3,7 @@
 namespace app\repositories;
 
 use app\models\User;
-use app\repository\exceptions\NotFoundException;
+use app\repositories\exceptions\NotFoundException;
 
 class UserRepository
 {
