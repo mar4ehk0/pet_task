@@ -118,6 +118,11 @@ class Task extends \yii\db\ActiveRecord
         return $this->hasOne(Employee::class, ['id' => 'employee_id']);
     }
 
+    /**
+     * Gets query for [[File]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getFiles()
     {
         return $this->hasMany(File::class, ['task_id' => 'id']);
