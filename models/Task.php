@@ -117,4 +117,9 @@ class Task extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Employee::class, ['id' => 'employee_id']);
     }
+
+    public function getFiles()
+    {
+        return $this->hasMany(File::class, ['task_id' => 'id']);
+    }
 }
