@@ -3,6 +3,7 @@
 namespace app\services;
 
 use app\forms\CreateTaskForm;
+use app\helpers\TaskView;
 use app\models\File;
 use app\models\Task;
 use app\repositories\FileRepository;
@@ -89,6 +90,7 @@ class TaskService
                 $uploadedFile->name,
                 $uploadedFile->getExtension(),
                 $createTaskForm->client_id,
+                $uploadedFile->size,
             );
             $filesDTO = new FilesDTO($uploadedFile, $file);
             $files[] = $filesDTO;
@@ -96,5 +98,14 @@ class TaskService
 
         return $files;
     }
+
+    public function getTaskView($id): TaskView
+    {
+        $task = $this->taskRepository->find($id);
+        return new TaskView($task);
+    }
+
+
+
 
 }
