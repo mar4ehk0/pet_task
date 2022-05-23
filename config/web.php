@@ -47,10 +47,12 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-//            'enableStrictParsing' => false,
+            'enableStrictParsing' => true,
             'rules' => [
                 'register/employee' => 'register/employee',
-                'register/client' => 'register/client'
+                'register/client' => 'register/client',
+                'task/create' => 'task/create',
+                'task/view/<id:\d+>' => 'task/view'
             ],
         ],
     ],
