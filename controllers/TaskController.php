@@ -36,19 +36,21 @@ class TaskController extends \yii\web\Controller
 
         $model = new CreateTaskForm($client_id, $this->cityRepository, $this->categoryRepository);
         if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-            $this->taskService->create($model);
+            $task = $this->taskService->create($model);
             Yii::$app->session->setFlash('success', 'Задача создана.');
-//            $this->redirect('task/view');
+            $this->redirect(['task/view', 'id' => $task->id]);
         }
         return $this->render('create', [
             'model' => $model,
         ]);
     }
-//
-//    public function actionView()
-//    {
-//        return $this->render('view', [
-//            'model' => $model,
-//        ]);
-//    }
+
+    public function actionView($id)
+    {
+        $model = $this->taskService->getTaskView($id);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
 }

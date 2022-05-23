@@ -14,13 +14,14 @@ use Yii;
  * @property int $client_id
  * @property int $task_id
  * @property string $created
+ * @property int $size
  *
  * @property Task $task
  * @property User $user
  */
 class File extends \yii\db\ActiveRecord
 {
-    public const PATH_UPLOADS = '@webroot/uploads';
+    public const PATH_UPLOADS = 'uploads';
 
     /**
      * {@inheritdoc}
@@ -30,7 +31,7 @@ class File extends \yii\db\ActiveRecord
         return 'files';
     }
 
-    public static function create(Task $task, string $name, string $extension, int $client_id): File
+    public static function create(Task $task, string $name, string $extension, int $client_id, int $size): File
     {
         $file = new self();
         $file->populateRelation('task', $task);
@@ -39,6 +40,7 @@ class File extends \yii\db\ActiveRecord
         $file->path = self::PATH_UPLOADS;
         $file->client_id = $client_id;
         $file->created = (new \DateTime())->format('Y-m-d');
+        $file->size = $size;
         return $file;
     }
 
@@ -48,8 +50,8 @@ class File extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'extension', 'path', 'client_id', 'task_id', 'created'], 'required'],
-            [['client_id', 'task_id'], 'integer'],
+            [['name', 'extension', 'path', 'client_id', 'task_id', 'created', 'size'], 'required'],
+            [['client_id', 'task_id', 'size'], 'integer'],
             [['name', 'extension', 'path'], 'string', 'max' => 255],
             [['name', 'extension', 'task_id'], 'unique', 'targetAttribute' => ['name', 'extension', 'task_id']],
             [['task_id'],
@@ -79,6 +81,7 @@ class File extends \yii\db\ActiveRecord
             'client_id' => 'User ID',
             'task_id' => 'Task ID',
             'created' => 'Created',
+            'size' => 'Size',
         ];
     }
 
