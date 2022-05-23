@@ -21,7 +21,7 @@ use Yii;
  */
 class File extends \yii\db\ActiveRecord
 {
-    public const PATH_UPLOADS = '@webroot/uploads';
+    public const PATH_UPLOADS = 'uploads';
 
     /**
      * {@inheritdoc}

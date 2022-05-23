@@ -3,10 +3,14 @@
 namespace app\helpers;
 
 use app\models\File;
+use JetBrains\PhpStorm\Pure;
 use yii\helpers\Url;
 
 class FileView
 {
+
+    public const PREFIX = '@web';
+
     private File $file;
 
     public function __construct(File $file)
@@ -16,7 +20,7 @@ class FileView
 
     public function getUrl(): string
     {
-        return Url::to($this->file->path . '/' . $this->file->name, true);
+        return Url::to($this->createPath());
     }
     
     public function getName(): string
@@ -24,19 +28,27 @@ class FileView
         return $this->file->name;
     }
 
-    public function getSize(): string
+    #[Pure] public function getSize(): string
     {
-        return $this->formatBytes($this->file);
+        return $this->formatBytes($this->file->size);
     }
 
-    final protected function formatBytes($bytes, $precision = 2)
+    final protected function formatBytes($bytes, $precision = 2): string
     {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+        if( ($bytes >= 1<<30)) {
+            return number_format($bytes / (1 << 30), 2) . "GB";
+        }
+        if( ($bytes >= 1<<20)) {
+            return number_format($bytes / (1 << 20), 2) . "MB";
+        }
+        if( ($bytes >= 1<<10)) {
+            return number_format($bytes / (1 << 10), 2) . "KB";
+        }
+        return number_format($bytes)."B";
+    }
 
-        $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
-
-        return round($bytes, $precision) . ' ' . $units[$pow];
+    private function createPath(): string
+    {
+        return self::PREFIX . '/' . $this->file->path . '/' . $this->file->name;
     }
 }
