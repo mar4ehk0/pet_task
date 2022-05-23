@@ -19,7 +19,7 @@ $statusDeadline = ViewHelper::isValidAttribute('deadline', $model)  ? '' : 'is-i
 $statusPrice = ViewHelper::isValidAttribute('price', $model)  ? '' : 'is-invalid';
 
 ?>
-<div class="site-login">
+<div class="task-create">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin([

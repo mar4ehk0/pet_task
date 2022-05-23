@@ -34,7 +34,7 @@ class TaskService
         $this->transactionManager = $transactionManager;
     }
 
-    public function create(CreateTaskForm $createTaskForm)
+    public function create(CreateTaskForm $createTaskForm): Task
     {
         $task = $this->createTask($createTaskForm);
         $filesDTO = $this->createFiles($createTaskForm, $task);
@@ -46,6 +46,8 @@ class TaskService
                 $this->fileRepository->add($fileDTO->file);
             }
         });
+
+        return $task;
     }
 
     private function createTask(CreateTaskForm $createTaskForm): Task
