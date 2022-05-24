@@ -85,17 +85,9 @@ class TaskView
 
     public function getStatus(): string
     {
-        if ($this->task->status === Task::STATUS_NEW) {
-            return 'Ищет исполнителя';
-        } elseif ($this->task->status === Task::STATUS_CANCELED) {
-            return 'Отменено заказчиком';
-        } elseif ($this->task->status === Task::STATUS_IN_WORK) {
-            return 'В работе';
-        } elseif ($this->task->status === Task::STATUS_COMPLETED) {
-            return 'Выполнено';
-        } else {
-            return 'Исполнитель отказался';
-        }
+        $list = ViewHelper::getListStatusTask();
+        return $list[$this->task->status];
+
     }
 
     /**
