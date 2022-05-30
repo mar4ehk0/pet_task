@@ -16,17 +16,7 @@ use yii\helpers\Url;
         'method' => 'get',
         'enableClientValidation' => true,
         'validateOnSubmit' => true,
-        'options' => [
-            'name' => 'test',
-        ],
         'action' => Url::to(['task/clients']),
-//        'layout' => 'horizontal',
-//        'fieldConfig' => [
-//            'template' => "{label}\n{input}\n{error}",
-//            'labelOptions' => ['class' => 'col-3 col-form-label'],
-//            'inputOptions' => ['class' => 'col-5 form-control'],
-//            'errorOptions' => ['class' => 'col-4 invalid-feedback'],
-//        ],
     ]); ?>
     <div class="categories">
         <h4>Категории</h4>

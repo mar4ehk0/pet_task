@@ -57,7 +57,8 @@ class TaskController extends \yii\web\Controller
 
     public function actionClients()
     {
-        $model = new FindTaskForm($this->categoryRepository, Yii::$app->request->get());
-        return $this->render('client', ['model' => $model]);
+        $client_id = \Yii::$app->user->identity->getId();
+        $searchTaskView = $this->taskService->getSearchTaskView($client_id, Yii::$app->request->get());
+        return $this->render('client', ['model' => $searchTaskView]);
     }
 }
