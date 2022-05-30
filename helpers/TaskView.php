@@ -14,6 +14,11 @@ class TaskView
         $this->task = $task;
     }
 
+    public function getId(): int
+    {
+        return $this->task->id;
+    }
+
     public function getPrice(): string
     {
         if (empty($this->task->price)) {
@@ -36,7 +41,7 @@ class TaskView
     public function getLocation(): string
     {
         if ($this->task->is_remote) {
-            return '';
+            return 'Удаленная работа';
         }
 
         return $this->task->location;
