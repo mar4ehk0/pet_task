@@ -2,7 +2,10 @@
 
 namespace app\controllers;
 
+use app\forms\FindTaskForm;
+use app\repositories\CategoryRepository;
 use app\repositories\UserRepository;
+use app\services\TaskService;
 use app\services\UserService;
 use Yii;
 use yii\filters\AccessControl;
@@ -40,10 +43,8 @@ class SiteController extends Controller
         } else {
 //            echo '2222222222222222222222';
             // если зарегестрированный то вывод страницы со списком всех заказов - роль заказчик
-            return $this->render('client');
+            $this->redirect(['task/clients']);
         }
-
-//        return $this->render('notlogin');
     }
 
     /**

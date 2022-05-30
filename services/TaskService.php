@@ -3,9 +3,12 @@
 namespace app\services;
 
 use app\forms\CreateTaskForm;
+use app\forms\FindTaskForm;
+use app\helpers\SearchTaskView;
 use app\helpers\TaskView;
 use app\models\File;
 use app\models\Task;
+use app\repositories\CategoryRepository;
 use app\repositories\FileRepository;
 use app\repositories\TaskRepository;
 use app\services\dto\FilesDTO;
@@ -20,10 +23,12 @@ class TaskService
     private FileRepository $fileRepository;
     private TransactionManager $transactionManager;
     private FileStorage $fileStorage;
+    private CategoryRepository $categoryRepository;
 
     public function __construct(
         TaskRepository $taskRepository,
         FileRepository $fileRepository,
+        CategoryRepository $categoryRepository,
         FileStorage $fileStorage,
         TransactionManager $transactionManager,
     )
@@ -32,6 +37,7 @@ class TaskService
         $this->fileRepository = $fileRepository;
         $this->fileStorage = $fileStorage;
         $this->transactionManager = $transactionManager;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function create(CreateTaskForm $createTaskForm): Task
@@ -107,7 +113,13 @@ class TaskService
         return new TaskView($task);
     }
 
+    public function getSearchTaskView(int $client_id, array $get): SearchTaskView
+    {
+        $model = new FindTaskForm($this->categoryRepository, $client_id, $get);
+        $data = $this->taskRepository->findByQuery($model);
 
+        return new SearchTaskView($model, $data);
+    }
 
 
 }

@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\forms\CreateTaskForm;
+use app\forms\FindTaskForm;
 use app\repositories\CategoryRepository;
 use app\repositories\CityRepository;
 use app\services\TaskService;
@@ -52,5 +53,12 @@ class TaskController extends \yii\web\Controller
         return $this->render('view', [
             'model' => $model,
         ]);
+    }
+
+    public function actionClients()
+    {
+        $client_id = \Yii::$app->user->identity->getId();
+        $searchTaskView = $this->taskService->getSearchTaskView($client_id, Yii::$app->request->get());
+        return $this->render('client', ['model' => $searchTaskView]);
     }
 }

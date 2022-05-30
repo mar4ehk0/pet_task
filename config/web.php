@@ -59,7 +59,8 @@ $config = [
                 'register/employee' => 'register/employee',
                 'register/client' => 'register/client',
                 'task/create' => 'task/create',
-                'task/view/<id:\d+>' => 'task/view'
+                'task/view/<id:\d+>' => 'task/view',
+                'task/clients-list' => 'task/clients'
             ],
         ],
     ],
