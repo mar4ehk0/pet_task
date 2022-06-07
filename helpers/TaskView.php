@@ -2,8 +2,14 @@
 
 namespace app\helpers;
 
+use app\models\buttons\AbortButton;
+use app\models\buttons\BidButton;
+use app\models\buttons\ButtonAbstract;
+use app\models\buttons\CancelButton;
+use app\models\buttons\CompleteButton;
 use app\models\File;
 use app\models\Task;
+use app\models\User;
 
 class TaskView
 {
@@ -112,5 +118,26 @@ class TaskView
 
         return $result;
     }
+
+    public function getButton(User $user): ?ButtonAbstract
+    {
+        if ($this->task->status === Task::STATUS_NEW) {
+            if ($user->isEmployee()) {
+                return new BidButton($this->task);
+            }
+            return new CancelButton($this->task);
+        }
+        if ($this->task->status === Task::STATUS_IN_WORK) {
+            if ($user->isEmployee()) {
+                return new AbortButton($this->task);
+            }
+
+            return new CompleteButton($this->task);
+        }
+
+        return null;
+    }
+
+
 
 }
