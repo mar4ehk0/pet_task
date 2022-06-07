@@ -10,6 +10,9 @@ use yii\data\Pagination;
 
 class TaskRepository
 {
+
+    private const LIMIT_TASK_PER_PAGE = 5;
+
     public function find(int $id): Task
     {
         if (!$task = Task::findOne($id)) {
@@ -69,6 +72,7 @@ class TaskRepository
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->setPageSize(self::LIMIT_TASK_PER_PAGE);
         $results = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->indexBy('id')->all();
