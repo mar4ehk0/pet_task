@@ -21,6 +21,29 @@ class SiteController extends Controller
     private UserRepository $userRepository;
     private UserService $userService;
 
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['login'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['login'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['*'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+
     public function __construct($id, $module, UserRepository $userRepository, UserService $userService, $config = [])
     {
         parent::__construct($id, $module, $config = []);
