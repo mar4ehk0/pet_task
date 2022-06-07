@@ -61,4 +61,24 @@ class TaskController extends \yii\web\Controller
         $searchTaskView = $this->taskService->getSearchTaskView($client_id, Yii::$app->request->get());
         return $this->render('client', ['model' => $searchTaskView]);
     }
+
+    public function actionBid($id)
+    {
+
+    }
+
+    public function actionCancel($id)
+    {
+
+    }
+
+    public function actionAbort($id)
+    {
+
+    }
+
+    public function actionComplete($id)
+    {
+
+    }
 }

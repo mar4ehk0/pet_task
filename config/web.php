@@ -60,6 +60,10 @@ $config = [
                 'register/client' => 'register/client',
                 'task/create' => 'task/create',
                 'task/view/<id:\d+>' => 'task/view',
+                'task/bid/<id:\d+>' => 'task/bid',
+                'task/cancel/<id:\d+>' => 'task/cancel',
+                'task/abort/<id:\d+>' => 'task/abort',
+                'task/complete/<id:\d+>' => 'task/complete',
                 'task/clients-list' => 'task/clients'
             ],
         ],
