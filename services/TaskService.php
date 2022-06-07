@@ -107,9 +107,9 @@ class TaskService
         return $files;
     }
 
-    public function getTaskView($id): TaskView
+    public function getTaskView($task_id): TaskView
     {
-        $task = $this->taskRepository->find($id);
+        $task = $this->taskRepository->find($task_id);
         return new TaskView($task);
     }
 
