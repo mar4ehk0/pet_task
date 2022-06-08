@@ -2,8 +2,13 @@
 
 namespace app\commands;
 
+use app\rbac\RBACManager;
+use app\rbac\rules\ClientRelatedTask;
+use app\rbac\rules\EmployeeRelatedTask;
 use Yii;
 use yii\console\Controller;
+use yii\rbac\Role;
+use yii\rbac\Rule;
 
 class RbacController extends Controller
 {
@@ -13,11 +18,10 @@ class RbacController extends Controller
         $auth->removeAll();
 
         // Creates roles
-        $roles = ['client', 'employee'];
-        foreach ($roles as $roleName) {
-            $role = $auth->createRole($roleName);
-            $auth->add($role);
-        }
+        $client = $auth->createRole(RBACManager::CLIENT);
+        $auth->add($client);
+        $employee = $auth->createRole(RBACManager::EMPLOYEE);
+        $auth->add($employee);
 
         // Creates permissions for tasks
         $taskPermissions = ['createTask', 'completeTask', 'viewTask', 'cancelTask', 'startTask', 'abortTask'];
@@ -31,35 +35,59 @@ class RbacController extends Controller
             $auth->add($permission);
         }
 
+        // Only client can create Task
+        $this->addRoleSpecialPermission($auth, $client, 'createTask');
+        // Only employee can create Bid
+        $this->addRoleSpecialPermission($auth, $employee, 'createBid');
+        // Only client can see all Bids
+        $this->addRoleSpecialPermission($auth, $client, 'viewBid');
 
+        // All can see Task
+        $this->addRoleSpecialPermission($auth, $client, 'viewTask');
+        $this->addRoleSpecialPermission($auth, $employee, 'viewTask');
+
+        $employeeRelatedTask = new EmployeeRelatedTask;
+        $auth->add($employeeRelatedTask);
+        $clientRelatedTask = new ClientRelatedTask;
+        $auth->add($clientRelatedTask);
+
+        // Permissions with rule for client.
+        $permissionsWithRule = [
+            'completeTask' => 'completeOwnTask',
+            'cancelTask' => 'cancelOwnTask',
+            'startTask' => 'startOwnTask'
+        ];
+
+        $this->setPermissions($permissionsWithRule, $auth, $clientRelatedTask, $client);
+
+        // Permissions with rule for employee.
+        $permissionsWithRule = [
+            'abortTask' => 'abortOwnTask',
+//            'viewBid' => 'viewOwnBid',
+        ];
+        $this->setPermissions($permissionsWithRule, $auth, $employeeRelatedTask, $employee);
 
         $this->stdout('Done. Create Roles and Permissions' . PHP_EOL);
 
-//        // добавляем разрешение "createPost"
-//        $createPost = $auth->createPermission('createPost');
-//        $createPost->description = 'Create a post';
-//        $auth->add($createPost);
-//
-//        // добавляем разрешение "updatePost"
-//        $updatePost = $auth->createPermission('updatePost');
-//        $updatePost->description = 'Update post';
-//        $auth->add($updatePost);
-//
-//        // добавляем роль "author" и даём роли разрешение "createPost"
-//        $author = $auth->createRole('author');
-//        $auth->add($author);
-//        $auth->addChild($author, $createPost);
-//
-//        // добавляем роль "admin" и даём роли разрешение "updatePost"
-//        // а также все разрешения роли "author"
-//        $admin = $auth->createRole('admin');
-//        $auth->add($admin);
-//        $auth->addChild($admin, $updatePost);
-//        $auth->addChild($admin, $author);
-//
-//        // Назначение ролей пользователям. 1 и 2 это IDs возвращаемые IdentityInterface::getId()
-//        // обычно реализуемый в модели User.
-//        $auth->assign($author, 2);
-//        $auth->assign($admin, 1);
     }
+
+    private function setPermissions(array $permissions, $auth, Rule $rule, Role $role): void
+    {
+        foreach ($permissions as $existNamePermission => $newNamePermission) {
+            $newPermission = $auth->createPermission($newNamePermission);
+            $newPermission->ruleName = $rule->name;
+            $auth->add($newPermission);
+
+            $existPermission = $auth->getPermission($existNamePermission);
+            $auth->addChild($newPermission, $existPermission);
+            $auth->addChild($role, $newPermission);
+        }
+    }
+
+    private function addRoleSpecialPermission($auth, Role $client, string $namePermission): void
+    {
+        $permission = $auth->getPermission($namePermission);
+        $auth->addChild($client, $permission);
+    }
+
 }
