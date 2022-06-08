@@ -11,12 +11,28 @@ use app\services\dto\EmployeeDTO;
 use app\services\dto\UserDTO;
 use app\services\RegisterService;
 use Yii;
+use yii\filters\AccessControl;
 
 class RegisterController extends \yii\web\Controller
 {
 
     private CityRepository $cityRepository;
     private RegisterService $registerService;
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function __construct($id, $module, CityRepository $cityRepository, RegisterService $registerService, $config = [])
     {
