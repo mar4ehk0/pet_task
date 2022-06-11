@@ -1,7 +1,7 @@
 <?php
 
 /** @var yii\web\View $this */
-/** @var app\helpers\TaskView $model */
+/** @var app\helpers\TaskPageView $model */
 
 use app\helpers\FileView;
 use yii\bootstrap4\Html;
