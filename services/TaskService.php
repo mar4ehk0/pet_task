@@ -2,12 +2,15 @@
 
 namespace app\services;
 
+use app\forms\CreateBidForm;
 use app\forms\CreateTaskForm;
 use app\forms\FindTaskForm;
 use app\helpers\SearchTaskView;
 use app\helpers\TaskPageView;
+use app\models\Bid;
 use app\models\File;
 use app\models\Task;
+use app\repositories\BidRepository;
 use app\repositories\CategoryRepository;
 use app\repositories\FileRepository;
 use app\repositories\TaskRepository;
@@ -26,6 +29,7 @@ class TaskService
     private FileStorage $fileStorage;
     private CategoryRepository $categoryRepository;
     private UserRepository $userRepository;
+    private BidRepository $bidRepository;
 
     public function __construct(
         TaskRepository $taskRepository,
@@ -34,6 +38,7 @@ class TaskService
         FileStorage $fileStorage,
         TransactionManager $transactionManager,
         UserRepository $userRepository,
+        BidRepository $bidRepository
     )
     {
         $this->taskRepository = $taskRepository;
@@ -42,6 +47,7 @@ class TaskService
         $this->transactionManager = $transactionManager;
         $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
+        $this->bidRepository = $bidRepository;
     }
 
     public function create(CreateTaskForm $createTaskForm): Task
@@ -127,5 +133,20 @@ class TaskService
         return new SearchTaskView($model, $data);
     }
 
+    public function createBid(CreateBidForm $bidForm): Bid
+    {
+        $bid = Bid::create(
+            $bidForm->getEmployeeId(),
+            $bidForm->getDescription(),
+            $bidForm->getPrice(),
+            $bidForm->getTaskId()
+        );
+
+        $this->transactionManager->execute(function () use ($bid) {
+            $this->bidRepository->add($bid);
+        });
+
+        return $bid;
+    }
 
 }

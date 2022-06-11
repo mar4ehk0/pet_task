@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\forms\CreateBidForm;
 use app\forms\CreateTaskForm;
 use app\rbac\RBACManager;
 use app\repositories\CategoryRepository;
@@ -102,7 +103,15 @@ class TaskController extends \yii\web\Controller
 
     public function actionBid($id)
     {
+        $employee_id = \Yii::$app->user->identity->getId();
 
+        $model = new CreateBidForm($employee_id, $id);
+        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+            $bid = $this->taskService->createBid($model);
+            Yii::$app->session->setFlash('success', 'Ваша предложение отправлено.');
+            $this->redirect(['task/view', 'id' => $id]);
+        }
+        return $this->render('bid', ['model' => $model]);
     }
 
     public function actionCancel($id)

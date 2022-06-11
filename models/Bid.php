@@ -27,6 +27,18 @@ class Bid extends \yii\db\ActiveRecord
         return 'bids';
     }
 
+    public static function create(int $employee_id, string $description, ?int $price, int $task_id): Bid
+    {
+        $bid = new self();
+        $bid->employee_id = $employee_id;
+        $bid->description = $description;
+        $bid->price = $price;
+        $bid->task_id = $task_id;
+        $bid->created = (new \DateTime())->format('Y-m-d');
+
+        return $bid;
+    }
+
     /**
      * Gets query for [[Employee]].
      *
