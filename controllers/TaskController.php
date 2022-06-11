@@ -3,11 +3,12 @@
 namespace app\controllers;
 
 use app\forms\CreateTaskForm;
-use app\forms\FindTaskForm;
+use app\rbac\RBACManager;
 use app\repositories\CategoryRepository;
 use app\repositories\CityRepository;
 use app\services\TaskService;
 use Yii;
+use yii\filters\AccessControl;
 
 class TaskController extends \yii\web\Controller
 {
@@ -15,6 +16,39 @@ class TaskController extends \yii\web\Controller
     private CityRepository $cityRepository;
     private CategoryRepository $categoryRepository;
     private TaskService $taskService;
+
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['create', 'clients', 'bid', 'view'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => [RBACManager::CLIENT],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['clients'],
+                        'roles' => [RBACManager::CLIENT],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['bid'],
+                        'roles' => [RBACManager::EMPLOYEE],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function __construct(
         $id,
@@ -48,7 +82,11 @@ class TaskController extends \yii\web\Controller
 
     public function actionView($id)
     {
-        $model = $this->taskService->getTaskView($id);
+        $user_id = \Yii::$app->user->identity->getId();
+        $model = $this->taskService->getTaskPageView($id, $user_id);
+//        if (!Yii::$app->user->can('viewTask', ['task' => $model->getTask()])) {
+//            throw new ForbiddenHttpException();
+//        }
 
         return $this->render('view', [
             'model' => $model,

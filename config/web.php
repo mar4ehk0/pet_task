@@ -67,6 +67,9 @@ $config = [
                 'task/clients-list' => 'task/clients'
             ],
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
     ],
     'params' => $params,
 ];
