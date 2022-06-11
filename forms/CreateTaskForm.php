@@ -10,7 +10,7 @@ use yii\base\Model;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
-class CreateTaskForm extends Model
+class CreateTaskForm extends AbstractForm
 {
     public string $title = '';
     public string $description = '';
@@ -84,40 +84,6 @@ class CreateTaskForm extends Model
         ];
     }
 
-    public function guardIsActualDate($attribute, $params, $validator): bool
-    {
-        if (empty($this->{$attribute})) {
-            $this->addError($attribute, 'Срок завершения не может быть пустым.');
-            return false;
-        }
-
-        $currentDate = new \DateTime();
-        $deadline = new \DateTime($this->{$attribute});
-        if ($currentDate > $deadline) {
-            $this->addError($attribute, 'Срок завершения не может быть меньше текущей даты.');
-            return false;
-        }
-        return true;
-    }
-
-    public function guardIsValidPrice($attribute, $params, $validator): bool
-    {
-        if (!isset($this->{$attribute})) {
-            return false;
-        }
-
-        if (!empty($this->{$attribute})) {
-            if (!is_numeric($this->{$attribute})) {
-                $this->addError($attribute, 'Бдюжет может быть целым число.');
-                return false;
-            }
-            if ($this->{$attribute} < 0) {
-                $this->addError($attribute, 'Бдюжет не может быть отрицательным.');
-                return false;
-            }
-        }
-        return true;
-    }
 
     public function getCityList(): array
     {
