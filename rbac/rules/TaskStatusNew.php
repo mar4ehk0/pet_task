@@ -5,7 +5,7 @@ namespace app\rbac\rules;
 use app\models\Task;
 use yii\rbac\Rule;
 
-class NewTask extends Rule
+class TaskStatusNew extends Rule
 {
     public $name = 'isNewTask';
 
