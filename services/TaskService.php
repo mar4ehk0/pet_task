@@ -5,12 +5,13 @@ namespace app\services;
 use app\forms\CreateTaskForm;
 use app\forms\FindTaskForm;
 use app\helpers\SearchTaskView;
-use app\helpers\TaskView;
+use app\helpers\TaskPageView;
 use app\models\File;
 use app\models\Task;
 use app\repositories\CategoryRepository;
 use app\repositories\FileRepository;
 use app\repositories\TaskRepository;
+use app\repositories\UserRepository;
 use app\services\dto\FilesDTO;
 use app\services\dto\TaskAddressDTO;
 use app\services\dto\TaskRequiredPropertiesDTO;
@@ -24,6 +25,7 @@ class TaskService
     private TransactionManager $transactionManager;
     private FileStorage $fileStorage;
     private CategoryRepository $categoryRepository;
+    private UserRepository $userRepository;
 
     public function __construct(
         TaskRepository $taskRepository,
@@ -31,6 +33,7 @@ class TaskService
         CategoryRepository $categoryRepository,
         FileStorage $fileStorage,
         TransactionManager $transactionManager,
+        UserRepository $userRepository,
     )
     {
         $this->taskRepository = $taskRepository;
@@ -38,6 +41,7 @@ class TaskService
         $this->fileStorage = $fileStorage;
         $this->transactionManager = $transactionManager;
         $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function create(CreateTaskForm $createTaskForm): Task
@@ -107,10 +111,12 @@ class TaskService
         return $files;
     }
 
-    public function getTaskView($task_id): TaskView
+    public function getTaskPageView($task_id, $user_id): TaskPageView
     {
         $task = $this->taskRepository->find($task_id);
-        return new TaskView($task);
+        $user = $this->userRepository->find($user_id);
+        // @TODO тут будут Bids браться для данной задаче
+        return new TaskPageView($task, $user);
     }
 
     public function getSearchTaskView(int $client_id, array $get): SearchTaskView
