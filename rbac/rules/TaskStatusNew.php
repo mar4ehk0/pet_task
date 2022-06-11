@@ -7,7 +7,7 @@ use yii\rbac\Rule;
 
 class TaskStatusNew extends Rule
 {
-    public $name = 'isNewTask';
+    public $name = 'isStatusTaskNew';
 
     /**
      * @param int $userId the user ID.
