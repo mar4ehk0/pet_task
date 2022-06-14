@@ -13,6 +13,7 @@ use Yii;
  * @property int|null $price
  * @property int $task_id
  * @property string $created
+ * @property bool $is_selected
  *
  * @property Employee $employee
  * @property Task $task
@@ -35,6 +36,7 @@ class Bid extends \yii\db\ActiveRecord
         $bid->price = $price;
         $bid->task_id = $task_id;
         $bid->created = (new \DateTime())->format('Y-m-d');
+        $bid->is_selected = false;
 
         return $bid;
     }
