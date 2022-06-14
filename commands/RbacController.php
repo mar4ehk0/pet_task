@@ -2,9 +2,8 @@
 
 namespace app\commands;
 
+use app\rbac\RBACHelper;
 use app\rbac\RBACManager;
-use app\rbac\rules\ClientRelatedTask;
-use app\rbac\rules\EmployeeRelatedTask;
 use Yii;
 use yii\console\Controller;
 use yii\rbac\Role;
@@ -23,71 +22,34 @@ class RbacController extends Controller
         $employee = $auth->createRole(RBACManager::EMPLOYEE);
         $auth->add($employee);
 
-        // Creates permissions for tasks
-        $taskPermissions = ['createTask', 'completeTask', 'viewTask', 'cancelTask', 'startTask', 'abortTask'];
+        $clientPermissions = RBACHelper::getClientPermissions();
+        $this->createPermissions($auth, $client, $clientPermissions);
 
-        // Create permissions for bids
-        $bidPermissions = ['createBid', 'viewBid'];
-
-        $permission = array_merge($taskPermissions, $bidPermissions);
-        foreach ($permission as $permissionName) {
-            $permission = $auth->createPermission($permissionName);
-            $auth->add($permission);
-        }
-
-        // Only client can create Task
-        $this->addRoleSpecialPermission($auth, $client, 'createTask');
-        // Only employee can create Bid
-        $this->addRoleSpecialPermission($auth, $employee, 'createBid');
-        // Only client can see all Bids
-        $this->addRoleSpecialPermission($auth, $client, 'viewBid');
-
-        // All can see Task
-        $this->addRoleSpecialPermission($auth, $client, 'viewTask');
-        $this->addRoleSpecialPermission($auth, $employee, 'viewTask');
-
-        $employeeRelatedTask = new EmployeeRelatedTask;
-        $auth->add($employeeRelatedTask);
-        $clientRelatedTask = new ClientRelatedTask;
-        $auth->add($clientRelatedTask);
-
-        // Permissions with rule for client.
-        $permissionsWithRule = [
-            'completeTask' => 'completeOwnTask',
-            'cancelTask' => 'cancelOwnTask',
-            'startTask' => 'startOwnTask'
-        ];
-
-        $this->setPermissions($permissionsWithRule, $auth, $clientRelatedTask, $client);
-
-        // Permissions with rule for employee.
-        $permissionsWithRule = [
-            'abortTask' => 'abortOwnTask',
-//            'viewBid' => 'viewOwnBid',
-        ];
-        $this->setPermissions($permissionsWithRule, $auth, $employeeRelatedTask, $employee);
+        $employeePermissions = RBACHelper::getEmployeePermissions();
+        $this->createPermissions($auth, $employee, $employeePermissions);
 
         $this->stdout('Done. Create Roles and Permissions' . PHP_EOL);
 
     }
 
-    private function setPermissions(array $permissions, $auth, Rule $rule, Role $role): void
+    private function createPermissions($auth, Role $role, array $clientPermissions)
     {
-        foreach ($permissions as $existNamePermission => $newNamePermission) {
-            $newPermission = $auth->createPermission($newNamePermission);
-            $newPermission->ruleName = $rule->name;
-            $auth->add($newPermission);
-
-            $existPermission = $auth->getPermission($existNamePermission);
-            $auth->addChild($newPermission, $existPermission);
-            $auth->addChild($role, $newPermission);
+        foreach ($clientPermissions as $namePermission => $value) {
+            if (is_null($value)) {
+                if (!$permission = $auth->getPermission($namePermission)) {
+                    $permission = $auth->createPermission($namePermission);
+                    $auth->add($permission);
+                }
+                $auth->addChild($role, $permission);
+            }
+            if ($value instanceof Rule) {
+                $auth->add($value);
+                $permission = $auth->createPermission($namePermission);
+                $permission->ruleName = $value->name;
+                $auth->add($permission);
+                $auth->addChild($role, $permission);
+            }
         }
-    }
-
-    private function addRoleSpecialPermission($auth, Role $client, string $namePermission): void
-    {
-        $permission = $auth->getPermission($namePermission);
-        $auth->addChild($client, $permission);
     }
 
 }

@@ -5,9 +5,9 @@ namespace app\rbac\rules;
 use app\models\Task;
 use yii\rbac\Rule;
 
-class TaskStatusInWork extends Rule
+class CanViewAllBids extends Rule
 {
-    public $name = 'isStatusTaskInWork';
+    public $name = 'canViewAllBids';
 
     /**
      * @param int $userId the user ID.
@@ -17,7 +17,16 @@ class TaskStatusInWork extends Rule
      */
     public function execute($userId, $item, $params)
     {
+        if (!isset($params['task'])) {
+            return false;
+        }
+
         /** @var $params['task'] Task */
-        return isset($params['task']) && $params['task']->status === Task::STATUS_IN_WORK;
+        $task = $params['task'];
+
+        if ($task->client_id !== $userId) {
+            return false;
+        }
+        return true;
     }
 }

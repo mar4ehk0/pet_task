@@ -23,6 +23,14 @@ class BidRepository
         return $bid;
     }
 
+    public function findSelectedByTaskId(int $task_id): Bid
+    {
+        if (!$bid = Bid::findOne(['is_selected' => true, 'task_id' => $task_id])) {
+            throw new NotFoundException('Model not found.');
+        }
+        return $bid;
+    }
+
     public function add(Bid $bid): bool
     {
         if (!$bid->getIsNewRecord()) {
