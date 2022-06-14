@@ -15,6 +15,6 @@ class BidButton extends ButtonAbstract
 
     public function getUrl(): string
     {
-        return Url::to(['task/bid', ['id' => $this->task->id]]);
+        return Url::to(['task/bid', 'id' => $this->task->id]);
     }
 }

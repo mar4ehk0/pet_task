@@ -13,6 +13,6 @@ class CompleteButton extends ButtonAbstract
 
     public function getUrl(): string
     {
-        return Url::to(['task/cancel', ['id' => $this->task->id]]);
+        return Url::to(['task/cancel', 'id' => $this->task->id]);
     }
 }

@@ -13,6 +13,6 @@ class AbortButton extends ButtonAbstract
 
     public function getUrl(): string
     {
-        return Url::to(['task/abort', ['id' => $this->task->id]]);
+        return Url::to(['task/abort', 'id' => $this->task->id]);
     }
 }
