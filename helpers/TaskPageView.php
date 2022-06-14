@@ -30,6 +30,16 @@ class TaskPageView
         return $this->button;
     }
 
+    public function getButtonTitle(): string
+    {
+        return $this->button ? $this->button->getName() : '';
+    }
+
+    public function getButtonUrl(): string
+    {
+        return $this->button ? $this->button->getUrl() : '';
+    }
+
     public function getId(): int
     {
         return $this->taskView->getId();
