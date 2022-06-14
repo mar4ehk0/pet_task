@@ -15,6 +15,14 @@ class BidRepository
         return $bid;
     }
 
+    public function findByTaskIdAndEmployeeId(int $task_id, int $employee_id): Bid
+    {
+        if (!$bid = Bid::findOne(['employee_id' => $employee_id, 'task_id' => $task_id])) {
+            throw new NotFoundException('Model not found.');
+        }
+        return $bid;
+    }
+
     public function add(Bid $bid): bool
     {
         if (!$bid->getIsNewRecord()) {
@@ -45,5 +53,13 @@ class BidRepository
         }
 
         return true;
+    }
+
+    public function findAllByTaskId($task_id): array
+    {
+        if (!$bids = Bid::findAll(['task_id' => $task_id])) {
+            return [];
+        }
+        return $bids;
     }
 }
