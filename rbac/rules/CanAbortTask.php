@@ -5,9 +5,9 @@ namespace app\rbac\rules;
 use app\models\Task;
 use yii\rbac\Rule;
 
-class TaskStatusInWork extends Rule
+class CanAbortTask extends Rule
 {
-    public $name = 'isNewTask';
+    public $name = 'canAbortTask';
 
     /**
      * @param int $userId the user ID.
@@ -17,7 +17,18 @@ class TaskStatusInWork extends Rule
      */
     public function execute($userId, $item, $params)
     {
+        if (!isset($params['user'], $params['task'])) {
+            return false;
+        }
+
+        /** @var $params['user'] User */
+        $user = $params['user'];
         /** @var $params['task'] Task */
-        return isset($params['task']) && $params['task']->status === Task::STATUS_IN_WORK;
+        $task = $params['task'];
+
+        if ($task->status !== Task::STATUS_IN_WORK || $task->employee_id !== $userId) {
+            return false;
+        }
+        return true;
     }
 }

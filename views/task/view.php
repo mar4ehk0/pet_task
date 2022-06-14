@@ -26,7 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="description">
                     <?= Html::encode($model->getDescription()) ?>
                 </div>
-                <div class="buttons"> Buttons</div>
+                <?php if ($model->getButton()) :?>
+                    <div class="button">
+                        <a href="<?=Html::encode($model->getButtonUrl())?>" class="btn btn-primary">
+                            <?=Html::encode($model->getButtonTitle())?>
+                        </a>
+                    </div>
+                <?php endif; ?>
                 <div class="location">
                     <?= Html::encode($model->getLocation()) ?>
                 </div>

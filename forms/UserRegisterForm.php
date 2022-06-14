@@ -8,7 +8,7 @@ use app\repositories\CityRepository;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 
-class UserRegisterForm extends Model
+class UserRegisterForm extends AbstractForm
 {
     public string $name = '';
     public string $email = '';
@@ -53,23 +53,6 @@ class UserRegisterForm extends Model
             'passwordRepeat' => 'Повтор Пароля',
             'city_id' => 'Город',
         ];
-    }
-
-    public function guardIsUserMature($attribute, $params, $validator)
-    {
-        if (!isset($this->{$attribute})) {
-            return false;
-        }
-
-        $limitDate = new \DateTime();
-        $limitDate->sub(new \DateInterval('P18Y'));
-        $birthday = new \DateTime($this->{$attribute});
-        if ($birthday > $limitDate) {
-            $this->addError($attribute, 'У нас работают только совершеннолетние.');
-            return false;
-        }
-
-        return true;
     }
 
     public function isAgeValid(): bool

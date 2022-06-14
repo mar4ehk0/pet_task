@@ -15,6 +15,17 @@ class RBACManager
     public const CLIENT = 'client';
     public const EMPLOYEE = 'employee';
 
+    public const PERMISSION_CREATE_TASK = 'createTask';
+    public const PERMISSION_COMPLETE_TASK = 'completeTask';
+    public const PERMISSION_VIEW_TASK = 'viewTask';
+    public const PERMISSION_CANCEL_TASK = 'cancelTask';
+    public const PERMISSION_START_TASK = 'startTask';
+    public const PERMISSION_ABORT_TASK = 'abortTask';
+
+    public const PERMISSION_CREATE_BID = 'createBid';
+    public const PERMISSION_VIEW_ALL_BIDS = 'viewAllBids';
+    public const PERMISSION_VIEW_OWN_BID = 'viewOwnBid';
+
     private DbManager $auth;
     private Role $roleClient;
     private Role $roleEmployee;
@@ -49,32 +60,31 @@ class RBACManager
 
     public function canShowBidButton(User $user, Task $task): bool
     {
-        if (!$task->status !== Task::STATUS_NEW) {
-            return false;
-        }
         // @TODO надо создать rbac Rule, которое будет проверять не отлкикался ли уже текущий пользователь на данную задачу
         // и проверять что пользователь имеет роль employee
         // Yii::$app->user->can('createBid')
+        return Yii::$app->user->can(self::EMPLOYEE)
+            && Yii::$app->user->can(self::PERMISSION_CREATE_BID, ['user' => $user, 'task' => $task]);
     }
 
-    public function canShowCancelButton(User $user, Task $task)
+    public function canShowCancelButton(User $user, Task $task): bool
     {
-        if (!$task->status !== Task::STATUS_NEW) {
-            return false;
-        }
         // @TODO надо создать rbac Rule, которое будет проверять что никто не откликнулся на эут задачу
         // и проверть что пользователь является владельцем задачи
         // Yii::$app->user->can('createBid')
+
+        return Yii::$app->user->can(self::CLIENT)
+            && Yii::$app->user->can(self::PERMISSION_CANCEL_TASK,['task' => $task]);
     }
 
-    public function canShowCompleteButton(User $user, Task $task)
+    public function canShowCompleteButton(User $user, Task $task): bool
     {
-        if (!$task->status !== Task::STATUS_IN_WORK) {
-            return false;
-        }
+
         // @TODO надо создать rbac Rule, надо проверить что задача находится в статсу STATUS_IN_WORK
         // и проверть что пользователь является владельцем задачи
         // Yii::$app->user->can('createBid')
+        return Yii::$app->user->can(self::CLIENT)
+            && Yii::$app->user->can(self::PERMISSION_COMPLETE_TASK,['task' => $task]);
     }
 
     public function canShowAbortButton(User $user, Task $task)
