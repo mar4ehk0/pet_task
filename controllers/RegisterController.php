@@ -54,6 +54,7 @@ class RegisterController extends \yii\web\Controller
                 )
             );
             Yii::$app->session->setFlash('success', 'Исполнитель зарегестрирован.');
+            $this->redirect(['site/login']);
         }
         return $this->render('employee', [
             'model' => $model,
@@ -71,6 +72,7 @@ class RegisterController extends \yii\web\Controller
                 )
             );
             Yii::$app->session->setFlash('success', 'Исполнитель зарегестрирован.');
+            $this->redirect(['site/login']);
         }
         return $this->render('client', [
             'model' => $model,
