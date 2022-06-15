@@ -7,6 +7,7 @@ use app\helpers\ViewHelper;
 use app\repositories\CategoryRepository;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 class FindTaskForm extends Model
 {
@@ -18,6 +19,7 @@ class FindTaskForm extends Model
     public string $status = '';
     public string $period = '';
     private int $client_id = 0;
+    private bool $is_employee = false;
 
 
     private CategoryRepository $categoryRepository;
@@ -32,6 +34,9 @@ class FindTaskForm extends Model
         }
 
         $this->client_id = $client_id;
+        if ($client_id === 0) {
+            $this->is_employee = true;
+        }
     }
 
     public function rules()
@@ -86,7 +91,7 @@ class FindTaskForm extends Model
             return null;
         }
 
-        return array_keys($this->categories);
+        return array_values($this->categories);
     }
 
     public function getStatus(): ?string
@@ -128,4 +133,14 @@ class FindTaskForm extends Model
 
         return $this->client_id;
     }
+
+    public function getAction(): string
+    {
+        if ($this->is_employee) {
+            return Url::to(['task/employees']);
+        }
+        return Url::to(['task/clients']);
+    }
+
+
 }

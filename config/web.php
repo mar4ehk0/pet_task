@@ -64,7 +64,8 @@ $config = [
                 'task/cancel/<id:\d+>' => 'task/cancel',
                 'task/abort/<id:\d+>' => 'task/abort',
                 'task/complete/<id:\d+>' => 'task/complete',
-                'task/clients-list' => 'task/clients'
+                'home-client' => 'task/clients',
+                'home-employee' => 'task/employees'
             ],
         ],
         'authManager' => [

@@ -7,7 +7,6 @@
 use kartik\icons\Icon;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
-use yii\helpers\Url;
 
 ?>
 <div class="task-search">
@@ -16,7 +15,7 @@ use yii\helpers\Url;
         'method' => 'get',
         'enableClientValidation' => true,
         'validateOnSubmit' => true,
-        'action' => Url::to(['task/clients']),
+        'action' => $model->getAction(),
     ]); ?>
     <div class="categories">
         <h4>Категории</h4>
