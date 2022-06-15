@@ -3,7 +3,6 @@
 namespace app\helpers;
 
 use app\models\Task;
-use Cassandra\Date;
 use yii\base\Model;
 
 class ViewHelper
@@ -51,7 +50,7 @@ class ViewHelper
         }
 
         if (!empty($interval->i)) {
-            return $interval->m . 'минут назад';
+            return $interval->i . 'минут назад';
         }
 
         return 'недавно';
@@ -64,5 +63,11 @@ class ViewHelper
         }
 
         return $price . '₽';
+    }
+
+    public static function convertRating(float $rating): int
+    {
+        $rating *= 10;
+        return floor(($rating * 100) / 50);
     }
 }
