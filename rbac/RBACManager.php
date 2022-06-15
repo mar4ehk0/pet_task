@@ -2,6 +2,7 @@
 
 namespace app\rbac;
 
+use app\models\Bid;
 use app\models\Client;
 use app\models\Employee;
 use app\models\Task;
@@ -105,6 +106,14 @@ class RBACManager
         // @TODO надо создать rbac Rule, надо проверить что задача находится в статсу STATUS_IN_WORK
         // и проверть что пользователя выбрали исполнителем
         // Yii::$app->user->can('createBid')
+    }
+
+    public function canShowBid(Bid $bid): bool
+    {
+        if (Yii::$app->user->can(self::CLIENT)) {
+            return Yii::$app->user->can(self::PERMISSION_VIEW_ALL_BIDS,['bid' => $bid]);
+        }
+        return Yii::$app->user->can(self::PERMISSION_VIEW_OWN_BID,['bid' => $bid]);
     }
 
 

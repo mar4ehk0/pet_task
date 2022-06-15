@@ -23,20 +23,46 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="row">
             <div class="col-sm-8">
-                <div class="description">
+                <div class="description bg-light">
                     <?= Html::encode($model->getDescription()) ?>
                 </div>
+                <br/>
                 <?php if ($model->getButton()) :?>
                     <div class="button">
                         <a href="<?=Html::encode($model->getButtonUrl())?>" class="btn btn-primary">
                             <?=Html::encode($model->getButtonTitle())?>
                         </a>
                     </div>
+                    <br/>
                 <?php endif; ?>
                 <div class="location">
                     <?= Html::encode($model->getLocation()) ?>
                 </div>
-                <div class="bids"> Bids</div>
+                <br/>
+                <?php if ($listBidView = $model->getListBidView()) :?>
+                    <div class="bids">
+                        <h4> Отклики на задание </h4>
+                        <?php foreach ($listBidView as $bidView) :?>
+                            <div class="card bid bg-light">
+                                <div class="card-body row">
+                                    <div class="col-3">
+                                        <div class="avatar">avatar</div>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="rating"><?= $this->render('@app/views/helper/rating', [
+                                                'rating' => $bidView->getEmployeeRating(),
+                                            ]) ?></div>
+                                        <div class="name"><?=Html::encode($bidView->getEmployeeName())?></div>
+                                        <div class="description"><?=Html::encode($bidView->getDescription())?></div>
+                                        <div class="price"><?=Html::encode($bidView->getPrice())?></div>
+                                        <div class="number-feedback"><?=Html::encode($bidView->getNumFeedback())?></div>
+                                        <div class="publish-date"><?=Html::encode($bidView->getPublicationDate())?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach;?>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="col-sm-4">
                 <div class="task-about">
