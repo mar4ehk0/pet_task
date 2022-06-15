@@ -104,7 +104,7 @@ class TaskController extends \yii\web\Controller
     public function actionEmployees()
     {
         $searchTaskView = $this->taskService->getSearchTaskView(0, Yii::$app->request->get());
-        return $this->render('client', ['model' => $searchTaskView]);
+        return $this->render('employee', ['model' => $searchTaskView]);
     }
 
     public function actionBid($id)
