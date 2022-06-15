@@ -62,7 +62,7 @@ class TaskView
         }
 
         if (!empty($interval->m)) {
-            return $interval->m . 'лет назад';
+            return $interval->m . 'месяц назад';
         }
 
         if (!empty($interval->d)) {
@@ -73,7 +73,7 @@ class TaskView
             return $interval->h . 'часов назад';
         }
 
-        if (!empty($interval->m)) {
+        if (!empty($interval->i)) {
             return $interval->m . 'минут назад';
         }
 
