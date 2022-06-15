@@ -60,7 +60,7 @@ class Task extends \yii\db\ActiveRecord
         $task->deadline = $dto->deadline;
         $task->is_remote = $dto->is_remote;
         $task->status = self::STATUS_NEW;
-        $task->created = (new \DateTime())->format('Y-m-d');
+        $task->created = (new \DateTime())->format('Y-m-d H:i:s');
         return $task;
     }
 
