@@ -58,6 +58,16 @@ class RBACManager
         return $this->auth->getRole(self::EMPLOYEE);
     }
 
+    public function isUserClient(): bool
+    {
+        return Yii::$app->user->can(self::CLIENT);
+    }
+
+    public function isUserEmployee(): bool
+    {
+        return Yii::$app->user->can(self::EMPLOYEE);
+    }
+
     public function canShowBidButton(User $user, Task $task): bool
     {
         // @TODO надо создать rbac Rule, которое будет проверять не отлкикался ли уже текущий пользователь на данную задачу
@@ -96,4 +106,6 @@ class RBACManager
         // и проверть что пользователя выбрали исполнителем
         // Yii::$app->user->can('createBid')
     }
+
+
 }
