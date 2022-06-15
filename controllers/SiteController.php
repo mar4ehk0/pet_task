@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\forms\FindTaskForm;
+use app\rbac\RBACManager;
 use app\repositories\CategoryRepository;
 use app\repositories\UserRepository;
 use app\services\TaskService;
@@ -56,17 +57,16 @@ class SiteController extends Controller
         // если зарегестрированный то вывод страницы для поиска работы - роль исполнитель
         // если зарегестрированный то вывод страницы со списком всех заказов - роль заказчик
         // если не зарегестрированный то вывод страницы с текстом
-        if (empty(Yii::$app->user->identity)) {
-            return $this->render('notlogin');
-        }
-        $user = $this->userRepository->findByEmail(Yii::$app->user->identity->email);
-        if ($user->isEmployee()) {
-//            echo '1111111111111111111';
+
+        $rbacManager = new RBACManager();
+        if ($rbacManager->isUserEmployee()) {
             // если зарегестрированный то вывод страницы для поиска работы - роль исполнитель
-        } else {
-//            echo '2222222222222222222222';
+            $this->redirect(['task/employees']);
+        } elseif ($rbacManager->isUserClient()) {
             // если зарегестрированный то вывод страницы со списком всех заказов - роль заказчик
             $this->redirect(['task/clients']);
+        } else {
+            return $this->render('notlogin');
         }
     }
 
