@@ -35,7 +35,7 @@ class Bid extends \yii\db\ActiveRecord
         $bid->description = $description;
         $bid->price = $price;
         $bid->task_id = $task_id;
-        $bid->created = (new \DateTime())->format('Y-m-d');
+        $bid->created = (new \DateTime())->format('Y-m-d H:i:s');
         $bid->is_selected = false;
 
         return $bid;

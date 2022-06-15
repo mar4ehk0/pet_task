@@ -65,7 +65,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         $user->password = $userDTO->password;
         $user->birthday = $userDTO->birthday;
         $user->city_id = $userDTO->city_id;
-        $user->created = (new \DateTime())->format('Y-m-d');
+        $user->created = (new \DateTime())->format('Y-m-d H:i:s');
         return $user;
     }
 

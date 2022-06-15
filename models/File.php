@@ -39,7 +39,7 @@ class File extends \yii\db\ActiveRecord
         $file->extension = $extension;
         $file->path = self::PATH_UPLOADS;
         $file->client_id = $client_id;
-        $file->created = (new \DateTime())->format('Y-m-d');
+        $file->created = (new \DateTime())->format('Y-m-d H:i:s');
         $file->size = $size;
         return $file;
     }
