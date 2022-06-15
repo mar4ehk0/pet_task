@@ -20,11 +20,7 @@ class TaskView
 
     public function getPrice(): string
     {
-        if (empty($this->task->price)) {
-            return 'Цена не определена';
-        }
-
-        return $this->task->price . '₽';
+        return ViewHelper::getPrice($this->task->price);
     }
 
     public function getTitle(): string
@@ -54,30 +50,7 @@ class TaskView
     public function getPublicationDate(): string
     {
         $date = new \DateTime($this->task->created);
-        $current = New \DateTime();
-        $interval = $current->diff($date);
-        // @TODO plural для вывода дат
-        if (!empty($interval->y)) {
-            return $interval->y . 'лет назад';
-        }
-
-        if (!empty($interval->m)) {
-            return $interval->m . 'месяц назад';
-        }
-
-        if (!empty($interval->d)) {
-            return $interval->d . 'дней назад';
-        }
-
-        if (!empty($interval->h)) {
-            return $interval->h . 'часов назад';
-        }
-
-        if (!empty($interval->i)) {
-            return $interval->m . 'минут назад';
-        }
-
-        return 'недавно';
+        return ViewHelper::getRelativeTime($date);
     }
 
     public function getDeadline(): string
