@@ -5,6 +5,7 @@ namespace app\services;
 use app\forms\CreateBidForm;
 use app\forms\CreateTaskForm;
 use app\forms\FindTaskForm;
+use app\helpers\ListBidView;
 use app\helpers\SearchTaskView;
 use app\helpers\TaskPageView;
 use app\models\Bid;
@@ -121,8 +122,9 @@ class TaskService
     {
         $task = $this->taskRepository->find($task_id);
         $user = $this->userRepository->find($user_id);
+        $bids = $this->bidRepository->findAllByTaskId($task_id);
         // @TODO тут будут Bids браться для данной задаче
-        return new TaskPageView($task, $user);
+        return new TaskPageView($task, $user, new ListBidView($bids));
     }
 
     public function getSearchTaskView(int $client_id, array $get): SearchTaskView

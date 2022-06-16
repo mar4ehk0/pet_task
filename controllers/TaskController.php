@@ -24,7 +24,7 @@ class TaskController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['create', 'clients', 'bid', 'view'],
+                'only' => ['create', 'clients', 'bid', 'view', 'employees'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -35,6 +35,11 @@ class TaskController extends \yii\web\Controller
                         'allow' => true,
                         'actions' => ['clients'],
                         'roles' => [RBACManager::CLIENT],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['employees'],
+                        'roles' => [RBACManager::EMPLOYEE],
                     ],
                     [
                         'allow' => true,

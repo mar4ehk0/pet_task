@@ -6,6 +6,7 @@ use app\helpers\TaskView;
 use app\models\Task;
 use yii\data\Pagination;
 
+//@TODO перенести этот класс в helpers и переименновать в TaskListView
 class TaskListViewDTO
 {
     /**

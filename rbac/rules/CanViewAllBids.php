@@ -2,7 +2,7 @@
 
 namespace app\rbac\rules;
 
-use app\models\Task;
+use app\models\Bid;
 use yii\rbac\Rule;
 
 class CanViewAllBids extends Rule
@@ -17,14 +17,13 @@ class CanViewAllBids extends Rule
      */
     public function execute($userId, $item, $params)
     {
-        if (!isset($params['task'])) {
+        if (!isset($params['bid'])) {
             return false;
         }
 
-        /** @var $params['task'] Task */
-        $task = $params['task'];
-
-        if ($task->client_id !== $userId) {
+        /** @var Bid $bid */
+        $bid = $params['bid'];
+        if ($bid->task->client_id !== $userId) {
             return false;
         }
         return true;

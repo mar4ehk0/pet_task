@@ -14,8 +14,9 @@ class TaskPageView
     private User $user;
     private ?ButtonAbstract $button;
     private TaskView $taskView;
+    private ListBidView $bidsListView;
 
-    public function __construct(Task $task, User $user)
+    public function __construct(Task $task, User $user, ListBidView $bidsListView)
     {
         $this->task = $task;
         $this->user = $user;
@@ -23,6 +24,7 @@ class TaskPageView
         $this->taskView = new TaskView($task);
 
         $this->button = ButtonFactory::create($user, $task);
+        $this->bidsListView = $bidsListView;
     }
 
     public function getButton(): ?ButtonAbstract
@@ -101,5 +103,13 @@ class TaskPageView
         }
 
         return $result;
+    }
+
+    /**
+     * @return BidView[] array
+     */
+    public function getListBidView(): array
+    {
+        return $this->bidsListView->getAllowedListBid();
     }
 }

@@ -27,4 +27,47 @@ class ViewHelper
         ];
 
     }
+
+    public static function getRelativeTime(\DateTime $dateTime): string
+    {
+        $current = New \DateTime();
+        $interval = $current->diff($dateTime);
+        // @TODO plural для вывода дат
+        if (!empty($interval->y)) {
+            return $interval->y . 'лет назад';
+        }
+
+        if (!empty($interval->m)) {
+            return $interval->m . 'месяц назад';
+        }
+
+        if (!empty($interval->d)) {
+            return $interval->d . 'дней назад';
+        }
+
+        if (!empty($interval->h)) {
+            return $interval->h . 'часов назад';
+        }
+
+        if (!empty($interval->i)) {
+            return $interval->i . 'минут назад';
+        }
+
+        return 'недавно';
+    }
+
+    public static function getPrice(?int $price): string
+    {
+        if ($price === null) {
+            return 'Цена не определена';
+        }
+
+        return $price . '₽';
+    }
+
+    public static function convertRating(float $rating): int
+    {
+        $rating *= 10;
+        return floor(($rating * 100) / 50);
+    }
 }
