@@ -2,11 +2,12 @@
 
 namespace app\rbac\rules;
 
+use app\models\Bid;
 use yii\rbac\Rule;
 
-class ClientRelatedTask extends Rule
+class CanDeclineBid  extends Rule
 {
-    public $name = 'isClientRelatedTask';
+    public $name = 'canDeclineBid';
 
     /**
      * @param int $userId the user ID.
@@ -16,7 +17,13 @@ class ClientRelatedTask extends Rule
      */
     public function execute($userId, $item, $params)
     {
-        /** @var $params['task'] Task */
-        return isset($params['task']) && $params['task']->client_id == $userId;
+        if (!isset($params['bid'])) {
+            return false;
+        }
+
+        /** @var Bid $bid */
+        $bid = $params['bid'];
+
+        return !$bid->is_declined;
     }
 }

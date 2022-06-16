@@ -26,6 +26,7 @@ class RBACManager
     public const PERMISSION_CREATE_BID = 'createBid';
     public const PERMISSION_VIEW_ALL_BIDS = 'viewAllBids';
     public const PERMISSION_VIEW_OWN_BID = 'viewOwnBid';
+    public const PERMISSION_DECLINE_BID = 'declineBid';
 
     private DbManager $auth;
     private Role $roleClient;

@@ -23,9 +23,6 @@ class CanViewAllBids extends Rule
 
         /** @var Bid $bid */
         $bid = $params['bid'];
-        if ($bid->task->client_id !== $userId) {
-            return false;
-        }
-        return true;
+        return $bid->task->client_id === $userId;
     }
 }

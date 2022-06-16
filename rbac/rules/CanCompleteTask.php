@@ -20,13 +20,9 @@ class CanCompleteTask extends Rule
         if (!isset($params['task'])) {
             return false;
         }
-        /** @var $params['task'] Task */
+        /** @var Task $task */
         $task = $params['task'];
 
-        if ($task->status === Task::STATUS_IN_WORK && !empty($task->employee_id)) {
-            return true;
-        }
-
-        return false;
+        return $task->status === Task::STATUS_IN_WORK && !empty($task->employee_id);
     }
 }
