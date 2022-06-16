@@ -51,4 +51,6 @@ class BidView
         $rbacManager = new RBACManager();
         return $rbacManager->canShowBid($this->bid);
     }
+
+
 }

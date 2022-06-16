@@ -7,9 +7,6 @@
 use app\helpers\ViewHelper;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
-use app\assets\CreateTaskAsset;
-
-CreateTaskAsset::register($this);
 
 $this->title = 'Ваша предложение';
 $this->params['breadcrumbs'][] = $this->title;

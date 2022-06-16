@@ -52,6 +52,10 @@ class CreateBidForm extends AbstractForm
 
     public function getPrice(): ?int
     {
+        if (empty($this->price)) {
+            return null;
+        }
+
         return $this->price;
     }
 

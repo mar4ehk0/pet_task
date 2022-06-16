@@ -58,8 +58,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="number-feedback"><?=Html::encode($bidView->getNumFeedback())?></div>
                                         <div class="publish-date"><?=Html::encode($bidView->getPublicationDate())?></div>
                                     </div>
+                                    <div class="ui-button">Кнопка 1 и Кнопка 2</div>
                                 </div>
                             </div>
+                            <br/>
                         <?php endforeach;?>
                     </div>
                 <?php endif; ?>

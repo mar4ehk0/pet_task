@@ -29,7 +29,7 @@ abstract class AbstractForm extends Model
         }
 
         if (!empty($this->{$attribute})) {
-            if (!is_int((int)$this->{$attribute})) {
+            if (!is_numeric($this->{$attribute}) || !is_int((int)$this->{$attribute})) {
                 $this->addError($attribute, 'Поле может быть целым число.');
                 return false;
             }
