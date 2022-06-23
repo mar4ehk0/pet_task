@@ -117,5 +117,16 @@ class RBACManager
         return Yii::$app->user->can(self::PERMISSION_VIEW_OWN_BID,['bid' => $bid]);
     }
 
+    public function canShowButtonAcceptBid(Bid $bid): bool
+    {
+        return Yii::$app->user->can(self::CLIENT)
+            && Yii::$app->user->can(self::PERMISSION_START_TASK, ['bid' => $bid]);
+    }
+
+    public function canShowButtonDeclineBid(Bid $bid): bool
+    {
+        return Yii::$app->user->can(self::CLIENT)
+            && Yii::$app->user->can(self::PERMISSION_DECLINE_BID, ['bid' => $bid]);
+    }
 
 }
