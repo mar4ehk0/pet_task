@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models\buttons;
+namespace app\models\buttons\task;
 
 use yii\helpers\Url;
 
-class AbortButton extends ButtonAbstract
+class AbortButtonTask extends AbstractButtonTask
 {
     public function getName(): string
     {

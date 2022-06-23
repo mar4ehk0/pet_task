@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\buttons;
+namespace app\models\buttons\task;
 
 use app\models\Task;
 use yii\helpers\Url;
 
-class BidButton extends ButtonAbstract
+class BidButtonTask extends AbstractButtonTask
 {
 
     public function getName(): string

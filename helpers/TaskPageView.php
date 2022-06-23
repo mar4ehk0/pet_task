@@ -2,8 +2,8 @@
 
 namespace app\helpers;
 
-use app\models\buttons\ButtonAbstract;
-use app\models\buttons\ButtonFactory;
+use app\models\buttons\task\AbstractButtonTask;
+use app\models\buttons\task\ButtonFactory;
 use app\models\File;
 use app\models\Task;
 use app\models\User;
@@ -12,7 +12,7 @@ class TaskPageView
 {
     private Task $task;
     private User $user;
-    private ?ButtonAbstract $button;
+    private ?AbstractButtonTask $button;
     private TaskView $taskView;
     private ListBidView $bidsListView;
 
@@ -27,7 +27,7 @@ class TaskPageView
         $this->bidsListView = $bidsListView;
     }
 
-    public function getButton(): ?ButtonAbstract
+    public function getButton(): ?AbstractButtonTask
     {
         return $this->button;
     }

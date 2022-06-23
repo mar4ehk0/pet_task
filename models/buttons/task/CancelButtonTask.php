@@ -1,14 +1,15 @@
 <?php
 
-namespace app\models\buttons;
+namespace app\models\buttons\task;
 
 use yii\helpers\Url;
 
-class CompleteButton extends ButtonAbstract
+class CancelButtonTask extends AbstractButtonTask
 {
+
     public function getName(): string
     {
-        return 'Завершить';
+        return 'Отменить';
     }
 
     public function getUrl(): string
