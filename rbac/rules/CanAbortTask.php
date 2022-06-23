@@ -17,18 +17,13 @@ class CanAbortTask extends Rule
      */
     public function execute($userId, $item, $params)
     {
-        if (!isset($params['user'], $params['task'])) {
+        if (!isset($params['task'])) {
             return false;
         }
 
-        /** @var $params['user'] User */
-        $user = $params['user'];
-        /** @var $params['task'] Task */
+        /** @var Task $task */
         $task = $params['task'];
 
-        if ($task->status !== Task::STATUS_IN_WORK || $task->employee_id !== $userId) {
-            return false;
-        }
-        return true;
+        return $task->status === Task::STATUS_IN_WORK && $task->employee_id === $userId;
     }
 }

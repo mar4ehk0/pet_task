@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models\buttons;
+namespace app\models\buttons\task;
 
+use app\models\buttons\AbstractButton;
 use app\models\Task;
-use yii\base\Model;
 
-abstract class ButtonAbstract extends Model
+abstract class AbstractButtonTask extends AbstractButton
 {
     protected Task $task;
 
@@ -14,8 +14,5 @@ abstract class ButtonAbstract extends Model
         parent::__construct($config);
         $this->task = $task;
     }
-
-    abstract public function getName(): string;
-    abstract public function getUrl(): string;
 
 }

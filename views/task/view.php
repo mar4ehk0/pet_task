@@ -58,7 +58,17 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="number-feedback"><?=Html::encode($bidView->getNumFeedback())?></div>
                                         <div class="publish-date"><?=Html::encode($bidView->getPublicationDate())?></div>
                                     </div>
-                                    <div class="ui-button">Кнопка 1 и Кнопка 2</div>
+                                    <?php if ($bidView->getButtons()): ?>
+                                        <div class="btn-group row">
+                                            <?php foreach ($bidView->getButtons() as $button): ?>
+                                                <div class="col-6">
+                                                    <a href="<?=Html::encode($button->getUrl())?>" class="btn btn-primary">
+                                                    <?=Html::encode($button->getName())?>
+                                                    </a>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <br/>

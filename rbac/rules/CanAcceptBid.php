@@ -2,11 +2,13 @@
 
 namespace app\rbac\rules;
 
+use app\models\Bid;
+use app\models\Task;
 use yii\rbac\Rule;
 
-class EmployeeRelatedTask extends Rule
+class CanAcceptBid extends Rule
 {
-    public $name = 'isEmployeeRelatedTask';
+    public $name = 'canAcceptBid';
 
     /**
      * @param int $userId the user ID.
@@ -16,7 +18,13 @@ class EmployeeRelatedTask extends Rule
      */
     public function execute($userId, $item, $params)
     {
-        /** @var $params['task'] Task */
-        return isset($params['task']) && $params['task']->employee_id == $userId;
+        if (!isset($params['bid'])) {
+            return false;
+        }
+
+        /** @var Bid $bid */
+        $bid = $params['bid'];
+
+        return $bid->task->status === Task::STATUS_NEW && $bid->task->client_id === $userId;
     }
 }

@@ -12,7 +12,7 @@ class m220614_113207_add_is_selected_column_to_bids_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('bids', 'is_selected', $this->boolean()->notNull());
+        $this->addColumn('{{%bids}}', 'is_selected', $this->boolean()->notNull());
     }
 
     /**
@@ -20,6 +20,6 @@ class m220614_113207_add_is_selected_column_to_bids_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('bids', 'is_selected');
+        $this->dropColumn('{{%bids}}', 'is_selected');
     }
 }

@@ -23,9 +23,6 @@ class CanViewOwnBid extends Rule
 
         /** @var Bid $bid */
         $bid = $params['bid'];
-        if ($bid->employee_id !== $userId) {
-            return false;
-        }
-        return true;
+        return $bid->employee_id === $userId;
     }
 }

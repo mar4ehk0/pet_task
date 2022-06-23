@@ -3,15 +3,24 @@
 namespace app\helpers;
 
 use app\models\Bid;
+use app\models\buttons\bid\AbstractButtonBid;
+use app\models\buttons\bid\AcceptButton;
+use app\models\buttons\bid\DeclineButton;
 use app\rbac\RBACManager;
 
 class BidView
 {
     private Bid $bid;
+    private RBACManager $rbacManager;
+    /** @var AbstractButtonBid[] */
+    private array $buttons;
 
     public function __construct(Bid $bid)
     {
         $this->bid = $bid;
+        $this->rbacManager = new RBACManager();
+        
+        $this->createsButtons();
     }
 
     public function getEmployeeName(): string
@@ -48,8 +57,24 @@ class BidView
 
     public function canView(): bool
     {
-        $rbacManager = new RBACManager();
-        return $rbacManager->canShowBid($this->bid);
+        return $this->rbacManager->canShowBid($this->bid);
+    }
+
+    public function getButtons(): array
+    {
+        return $this->buttons;
+    }
+
+    private function createsButtons(): void
+    {
+        $buttons = [];
+        if ($this->rbacManager->canShowButtonAcceptBid($this->bid)) {
+            $buttons[] = new AcceptButton($this->bid);
+        }
+        if ($this->rbacManager->canShowButtonDeclineBid($this->bid)) {
+            $buttons[] = new DeclineButton($this->bid);
+        }
+        $this->buttons = $buttons;
     }
 
 

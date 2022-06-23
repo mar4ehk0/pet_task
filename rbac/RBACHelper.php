@@ -6,7 +6,8 @@ use app\rbac\rules\CanAbortTask;
 use app\rbac\rules\CanBid;
 use app\rbac\rules\CanCancelTask;
 use app\rbac\rules\CanCompleteTask;
-use app\rbac\rules\CanStartTask;
+use app\rbac\rules\CanAcceptBid;
+use app\rbac\rules\CanDeclineBid;
 use app\rbac\rules\CanViewAllBids;
 use app\rbac\rules\CanViewOwnBid;
 
@@ -19,7 +20,8 @@ class RBACHelper
             RBACManager::PERMISSION_VIEW_TASK => null,
             RBACManager::PERMISSION_COMPLETE_TASK => new CanCompleteTask(),
             RBACManager::PERMISSION_CANCEL_TASK => new CanCancelTask(),
-            RBACManager::PERMISSION_START_TASK => new CanStartTask(),
+            RBACManager::PERMISSION_START_TASK => new CanAcceptBid(),
+            RBACManager::PERMISSION_DECLINE_BID => new CanDeclineBid(),
             RBACManager::PERMISSION_VIEW_ALL_BIDS => new CanViewAllBids(),
         ];
     }
