@@ -6,13 +6,17 @@ use app\rbac\RBACHelper;
 use app\rbac\RBACManager;
 use Yii;
 use yii\console\Controller;
+use yii\rbac\DbManager;
 use yii\rbac\Role;
 use yii\rbac\Rule;
 
 class RbacController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex(): void
     {
+        /**
+         * @psalm-suppress UndefinedClass
+         */
         $auth = Yii::$app->authManager;
         $auth->removeAll();
 
@@ -32,7 +36,7 @@ class RbacController extends Controller
 
     }
 
-    private function createPermissions($auth, Role $role, array $clientPermissions)
+    private function createPermissions(DbManager $auth, Role $role, array $clientPermissions): void
     {
         foreach ($clientPermissions as $namePermission => $value) {
             if (is_null($value)) {

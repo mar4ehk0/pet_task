@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="8"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <file name="requirements.php" />
+        <directory name="dtos" />
+        <directory name="helpers" />
+        <directory name="storages" />
+        <directory name="forms" />
+        <directory name="models" />
+        <directory name="assets" />
+        <directory name="commands" />
+        <directory name="services" />
+        <directory name="rbac" />
+        <directory name="repositories" />
+        <directory name="controllers" />
+        <directory name="views" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="widgets" />
+            <directory name="config" />
+            <directory name="migrations" />
+            <directory name="web" />
+            <directory name="mail" />
+        </ignoreFiles>
+    </projectFiles>
+</psalm>
