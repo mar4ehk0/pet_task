@@ -1,5 +1,7 @@
 <?php
+
 namespace app\dtos;
+
 class PeriodDTO
 {
     public string $from;
