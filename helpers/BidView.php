@@ -6,6 +6,7 @@ use app\models\Bid;
 use app\models\buttons\bid\AbstractButtonBid;
 use app\models\buttons\bid\AcceptButton;
 use app\models\buttons\bid\DeclineButton;
+use app\models\Task;
 use app\rbac\RBACManager;
 
 class BidView
@@ -63,6 +64,18 @@ class BidView
     public function getButtons(): array
     {
         return $this->buttons;
+    }
+
+    public function isAccepted(): bool
+    {
+        /** @var Task $task */
+        $task = $this->bid->task;
+        return $task->employee_id === $this->bid->employee_id;
+    }
+
+    public function isDeclined(): bool
+    {
+        return $this->bid->is_declined;
     }
 
     private function createsButtons(): void

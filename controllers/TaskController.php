@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\forms\CreateBidForm;
 use app\forms\CreateTaskForm;
 use app\rbac\RBACManager;
 use app\repositories\CategoryRepository;
@@ -24,7 +23,7 @@ class TaskController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['create', 'clients', 'bid', 'view', 'employees'],
+                'only' => ['create', 'clients', 'view', 'employees'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -39,11 +38,6 @@ class TaskController extends \yii\web\Controller
                     [
                         'allow' => true,
                         'actions' => ['employees'],
-                        'roles' => [RBACManager::EMPLOYEE],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['bid'],
                         'roles' => [RBACManager::EMPLOYEE],
                     ],
                     [
@@ -90,9 +84,6 @@ class TaskController extends \yii\web\Controller
     {
         $user_id = \Yii::$app->user->identity->getId();
         $model = $this->taskService->getTaskPageView($id, $user_id);
-//        if (!Yii::$app->user->can('viewTask', ['task' => $model->getTask()])) {
-//            throw new ForbiddenHttpException();
-//        }
 
         return $this->render('view', [
             'model' => $model,
@@ -110,19 +101,6 @@ class TaskController extends \yii\web\Controller
     {
         $searchTaskView = $this->taskService->getSearchTaskView(0, Yii::$app->request->get());
         return $this->render('employee', ['model' => $searchTaskView]);
-    }
-
-    public function actionBid($id)
-    {
-        $employee_id = \Yii::$app->user->identity->getId();
-
-        $model = new CreateBidForm($employee_id, $id);
-        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-            $bid = $this->taskService->createBid($model);
-            Yii::$app->session->setFlash('success', 'Ваша предложение отправлено.');
-            $this->redirect(['task/view', 'id' => $id]);
-        }
-        return $this->render('bid', ['model' => $model]);
     }
 
     public function actionCancel($id)

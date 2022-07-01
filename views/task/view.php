@@ -44,6 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h4> Отклики на задание </h4>
                         <?php foreach ($listBidView as $bidView) :?>
                             <div class="card bid bg-light">
+                                <?php if ($bidView->isAccepted()) :?>
+                                    <span class="badge badge-info">Выбран</span>
+                                <?php endif; ?>
+                                <?php if ($bidView->isDeclined()) :?>
+                                    <span class="badge badge-danger">Отклонен</span>
+                                <?php endif; ?>
                                 <div class="card-body row">
                                     <div class="col-3">
                                         <div class="avatar">avatar</div>

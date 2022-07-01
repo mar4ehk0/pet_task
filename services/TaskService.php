@@ -2,7 +2,6 @@
 
 namespace app\services;
 
-use app\forms\CreateBidForm;
 use app\forms\CreateTaskForm;
 use app\forms\FindTaskForm;
 use app\helpers\ListBidView;
@@ -135,20 +134,18 @@ class TaskService
         return new SearchTaskView($model, $data);
     }
 
-    public function createBid(CreateBidForm $bidForm): Bid
+    public function startTask(Bid $bid): bool
     {
-        $bid = Bid::create(
-            $bidForm->getEmployeeId(),
-            $bidForm->getDescription(),
-            $bidForm->getPrice(),
-            $bidForm->getTaskId()
-        );
+        /** @var Task $task */
+        $task = $this->taskRepository->find($bid->task_id);
+        $task->status = Task::STATUS_IN_WORK;
+        $task->employee_id = $bid->employee_id;
 
-        $this->transactionManager->execute(function () use ($bid) {
-            $this->bidRepository->add($bid);
+        $this->transactionManager->execute(function () use ($task) {
+            $this->taskRepository->save($task);
         });
 
-        return $bid;
+        return true;
     }
 
 }
