@@ -25,12 +25,11 @@ class ViewHelper
             Task::STATUS_COMPLETED => 'Выполнено',
             Task::STATUS_FAILED => 'Исполнитель отказался',
         ];
-
     }
 
     public static function getRelativeTime(\DateTime $dateTime): string
     {
-        $current = New \DateTime();
+        $current = new \DateTime();
         $interval = $current->diff($dateTime);
         // @TODO plural для вывода дат
         if (!empty($interval->y)) {

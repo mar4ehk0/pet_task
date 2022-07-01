@@ -6,7 +6,6 @@ use yii\helpers\Url;
 
 class CancelButtonTask extends AbstractButtonTask
 {
-
     public function getName(): string
     {
         return 'Отменить';

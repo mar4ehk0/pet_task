@@ -15,4 +15,4 @@ class TransactionManager
             throw $e;
         }
     }
-} 
+}

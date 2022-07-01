@@ -6,7 +6,6 @@ use yii\helpers\Url;
 
 class DeclineButton extends AbstractButtonBid
 {
-
     public function getName(): string
     {
         return 'Отказать';

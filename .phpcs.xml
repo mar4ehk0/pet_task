@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="Standard Rules PSR12">
+    <rule ref="PSR12"/>
+    <file>dtos</file>
+    <file>helpers</file>
+    <file>storages</file>
+    <file>forms</file>
+    <file>models</file>
+    <file>assets</file>
+    <file>commands</file>
+    <file>services</file>
+    <file>rbac</file>
+    <file>repositories</file>
+    <file>controllers</file>
+</ruleset>

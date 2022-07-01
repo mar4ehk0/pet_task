@@ -12,7 +12,6 @@ use yii\filters\AccessControl;
 
 class TaskController extends \yii\web\Controller
 {
-
     private CityRepository $cityRepository;
     private CategoryRepository $categoryRepository;
     private TaskService $taskService;
@@ -57,8 +56,7 @@ class TaskController extends \yii\web\Controller
         CategoryRepository $categoryRepository,
         TaskService $taskService,
         $config = []
-    )
-    {
+    ) {
         parent::__construct($id, $module, $config);
         $this->cityRepository = $cityRepository;
         $this->categoryRepository = $categoryRepository;
@@ -105,16 +103,13 @@ class TaskController extends \yii\web\Controller
 
     public function actionCancel($id)
     {
-
     }
 
     public function actionAbort($id)
     {
-
     }
 
     public function actionComplete($id)
     {
-
     }
 }

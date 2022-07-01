@@ -33,7 +33,6 @@ class RbacController extends Controller
         $this->createPermissions($auth, $employee, $employeePermissions);
 
         $this->stdout('Done. Create Roles and Permissions' . PHP_EOL);
-
     }
 
     private function createPermissions(DbManager $auth, Role $role, array $clientPermissions): void
@@ -55,5 +54,4 @@ class RbacController extends Controller
             }
         }
     }
-
 }

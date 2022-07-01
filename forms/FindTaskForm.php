@@ -11,7 +11,6 @@ use yii\helpers\Url;
 
 class FindTaskForm extends Model
 {
-
     public const STATUS_ANY = ['any' => 'Любой'];
     public const PERIOD_ANY = ['any' => 'Любой'];
 
@@ -109,7 +108,7 @@ class FindTaskForm extends Model
         }
         $from = new \DateTime();
         $to = new \DateTime($this->period);
-        return  new PeriodDTO($from->format('Y-m-d'),$to->format('Y-m-d'));
+        return  new PeriodDTO($from->format('Y-m-d'), $to->format('Y-m-d'));
     }
 
     private function setDefault(array $get): void
@@ -141,6 +140,4 @@ class FindTaskForm extends Model
         }
         return Url::to(['task/clients']);
     }
-
-
 }

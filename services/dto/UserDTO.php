@@ -15,9 +15,8 @@ class UserDTO
         string $email,
         string $password,
         string $birthday,
-        int    $city_id,
-    )
-    {
+        int $city_id,
+    ) {
         $this->name = $name;
         $this->email = strtolower($email);
         $this->password = $password;

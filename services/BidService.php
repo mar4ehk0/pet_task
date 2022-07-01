@@ -54,5 +54,4 @@ class BidService
         $result = $this->bidRepository->save($bid);
         return new BidResultDTO($bid, $result);
     }
-
 }

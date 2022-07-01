@@ -47,8 +47,7 @@ class BidController extends \yii\web\Controller
         BidService $bidService,
         BidRepository $bidRepository,
         $config = []
-    )
-    {
+    ) {
         parent::__construct($id, $module, $config);
 
         $this->bidService = $bidService;

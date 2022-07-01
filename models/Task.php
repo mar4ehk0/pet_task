@@ -33,7 +33,6 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
-
     public const STATUS_NEW = 0;
     public const STATUS_CANCELED = 1;
     public const STATUS_IN_WORK = 2;

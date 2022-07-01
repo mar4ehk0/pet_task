@@ -8,7 +8,6 @@ use app\storages\FileStorage;
 
 class FileRepository
 {
-
     public function find(int $id): File
     {
         if (!$file = File::findOne($id)) {

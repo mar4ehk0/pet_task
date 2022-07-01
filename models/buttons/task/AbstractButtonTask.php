@@ -14,5 +14,4 @@ abstract class AbstractButtonTask extends AbstractButton
         parent::__construct($config);
         $this->task = $task;
     }
-
 }

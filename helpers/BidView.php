@@ -20,7 +20,7 @@ class BidView
     {
         $this->bid = $bid;
         $this->rbacManager = new RBACManager();
-        
+
         $this->createsButtons();
     }
 
@@ -89,6 +89,4 @@ class BidView
         }
         $this->buttons = $buttons;
     }
-
-
 }

@@ -23,7 +23,6 @@ use yii\db\ActiveRecord;
  */
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
-
     public static function tableName()
     {
         return 'users';

@@ -17,7 +17,7 @@ class UserService
 
     public function login(string $email): bool
     {
-        return \Yii::$app->user->login($this->getUser($email),3600*24*30);
+        return \Yii::$app->user->login($this->getUser($email), 3600 * 24 * 30);
     }
 
     /**

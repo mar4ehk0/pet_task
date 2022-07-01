@@ -16,8 +16,7 @@ class TaskAddressDTO
         string $city_id,
         string $lat,
         string $long,
-    )
-    {
+    ) {
         $this->location = $location;
         $this->address = $address;
         $this->city_id = empty($city_id) ? null : $city_id;

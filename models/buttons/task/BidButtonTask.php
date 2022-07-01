@@ -7,7 +7,6 @@ use yii\helpers\Url;
 
 class BidButtonTask extends AbstractButtonTask
 {
-
     public function getName(): string
     {
         return 'Откликнуться на задание';

@@ -63,6 +63,4 @@ class CreateBidForm extends AbstractForm
     {
         return $this->task_id;
     }
-
-
 }

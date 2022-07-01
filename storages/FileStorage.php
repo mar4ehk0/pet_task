@@ -8,7 +8,6 @@ use yii\web\UploadedFile;
 
 class FileStorage
 {
-
     public const PREFIX = '@webroot';
 
     public function save(UploadedFile $uploadedFile, string $path): bool

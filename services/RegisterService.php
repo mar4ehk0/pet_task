@@ -26,8 +26,7 @@ class RegisterService
         UserRepository $userRepository,
         TransactionManager $transactionManager,
         RBACManager $RBACManager
-    )
-    {
+    ) {
         $this->employeeRepository = $employeeRepository;
         $this->clientRepository = $clientRepository;
         $this->userRepository = $userRepository;

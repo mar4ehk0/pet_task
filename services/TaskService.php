@@ -39,8 +39,7 @@ class TaskService
         TransactionManager $transactionManager,
         UserRepository $userRepository,
         BidRepository $bidRepository
-    )
-    {
+    ) {
         $this->taskRepository = $taskRepository;
         $this->fileRepository = $fileRepository;
         $this->fileStorage = $fileStorage;
@@ -147,5 +146,4 @@ class TaskService
 
         return true;
     }
-
 }

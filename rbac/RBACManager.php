@@ -72,8 +72,8 @@ class RBACManager
 
     public function canShowBidButton(User $user, Task $task): bool
     {
-        // @TODO надо создать rbac Rule, которое будет проверять не отлкикался ли уже текущий пользователь на данную задачу
-        // и проверять что пользователь имеет роль employee
+        // @TODO надо создать rbac Rule, которое будет проверять не отлкикался ли уже текущий пользователь на
+        // данную задачу и проверять что пользователь имеет роль employee
         // Yii::$app->user->can('createBid')
         return Yii::$app->user->can(self::EMPLOYEE)
             && Yii::$app->user->can(self::PERMISSION_CREATE_BID, ['user' => $user, 'task' => $task]);
@@ -86,7 +86,7 @@ class RBACManager
         // Yii::$app->user->can('createBid')
 
         return Yii::$app->user->can(self::CLIENT)
-            && Yii::$app->user->can(self::PERMISSION_CANCEL_TASK,['task' => $task]);
+            && Yii::$app->user->can(self::PERMISSION_CANCEL_TASK, ['task' => $task]);
     }
 
     public function canShowCompleteButton(User $user, Task $task): bool
@@ -96,7 +96,7 @@ class RBACManager
         // и проверть что пользователь является владельцем задачи
         // Yii::$app->user->can('createBid')
         return Yii::$app->user->can(self::CLIENT)
-            && Yii::$app->user->can(self::PERMISSION_COMPLETE_TASK,['task' => $task]);
+            && Yii::$app->user->can(self::PERMISSION_COMPLETE_TASK, ['task' => $task]);
     }
 
     public function canShowAbortButton(User $user, Task $task)
@@ -112,9 +112,9 @@ class RBACManager
     public function canShowBid(Bid $bid): bool
     {
         if (Yii::$app->user->can(self::CLIENT)) {
-            return Yii::$app->user->can(self::PERMISSION_VIEW_ALL_BIDS,['bid' => $bid]);
+            return Yii::$app->user->can(self::PERMISSION_VIEW_ALL_BIDS, ['bid' => $bid]);
         }
-        return Yii::$app->user->can(self::PERMISSION_VIEW_OWN_BID,['bid' => $bid]);
+        return Yii::$app->user->can(self::PERMISSION_VIEW_OWN_BID, ['bid' => $bid]);
     }
 
     public function canShowButtonAcceptBid(Bid $bid): bool
@@ -128,5 +128,4 @@ class RBACManager
         return Yii::$app->user->can(self::CLIENT)
             && Yii::$app->user->can(self::PERMISSION_DECLINE_BID, ['bid' => $bid]);
     }
-
 }

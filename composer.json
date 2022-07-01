@@ -32,7 +32,8 @@
         "codeception/module-filesystem": "^1.0.0",
         "codeception/module-yii2": "^1.0.0",
         "codeception/module-asserts": "^1.0.0",
-        "vimeo/psalm": "^4.23"
+        "vimeo/psalm": "^4.23",
+        "squizlabs/php_codesniffer": "*"
     },
     "config": {
         "process-timeout": 1800,

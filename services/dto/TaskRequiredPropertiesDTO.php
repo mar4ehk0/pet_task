@@ -20,8 +20,7 @@ class TaskRequiredPropertiesDTO
         string $deadline,
         int $client_id,
         bool $is_remote
-    )
-    {
+    ) {
         $this->title = $title;
         $this->description = $description;
         $this->category_id = $category_id;

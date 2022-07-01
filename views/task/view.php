@@ -6,7 +6,6 @@
 use app\helpers\FileView;
 use yii\bootstrap4\Html;
 
-
 $this->title = 'Просмотр задачи';
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -64,9 +63,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="number-feedback"><?=Html::encode($bidView->getNumFeedback())?></div>
                                         <div class="publish-date"><?=Html::encode($bidView->getPublicationDate())?></div>
                                     </div>
-                                    <?php if ($bidView->getButtons()): ?>
+                                    <?php if ($bidView->getButtons()) : ?>
                                         <div class="btn-group row">
-                                            <?php foreach ($bidView->getButtons() as $button): ?>
+                                            <?php foreach ($bidView->getButtons() as $button) : ?>
                                                 <div class="col-6">
                                                     <a href="<?=Html::encode($button->getUrl())?>" class="btn btn-primary">
                                                     <?=Html::encode($button->getName())?>
@@ -106,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="task-files">
                     <h5 class="text-uppercase">Файлы задания</h5>
                     <?php /** @var FileView $file */ ?>
-                    <?php foreach ($model->getFiles() as $file): ?>
+                    <?php foreach ($model->getFiles() as $file) : ?>
                         <div class="task-file">
                             <div class="file-name">
                                 <?= HTML::a($file->getName(), $file->getUrl()) ?>

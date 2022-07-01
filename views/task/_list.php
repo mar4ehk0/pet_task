@@ -11,9 +11,9 @@ use yii\helpers\Url;
 ?>
 
 <div class="task-list">
-    <?php if (empty($model->tasks)):?>
+    <?php if (empty($model->tasks)) :?>
         <h1>Ничего не найдено!</h1>
-    <?php else: ?>
+    <?php else : ?>
         <?php /** @var TaskView $task */ ?>
         <?php foreach ($model->tasks as $task) : ?>
             <div class="card">
@@ -39,8 +39,5 @@ use yii\helpers\Url;
     <?php endif;?>
 </div>
 <div class="pagination">
-    <?= LinkPager::widget([
-        'pagination' => $model->pages,
-    ])
-    ?>
+    <?= LinkPager::widget(['pagination' => $model->pages])?>
 </div>

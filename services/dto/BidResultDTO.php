@@ -14,5 +14,4 @@ class BidResultDTO
         $this->bid = $bid;
         $this->result = $result;
     }
-
 }

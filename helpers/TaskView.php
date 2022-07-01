@@ -55,20 +55,13 @@ class TaskView
 
     public function getDeadline(): string
     {
-       $deadline = new \DateTime($this->task->deadline);
-
-       return $deadline->format('Y, d F, H:i');
+        $deadline = new \DateTime($this->task->deadline);
+        return $deadline->format('Y, d F, H:i');
     }
 
     public function getStatus(): string
     {
         $list = ViewHelper::getListStatusTask();
         return $list[$this->task->status];
-
     }
-
-
-
-
-
 }

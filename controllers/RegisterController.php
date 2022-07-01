@@ -15,7 +15,6 @@ use yii\filters\AccessControl;
 
 class RegisterController extends \yii\web\Controller
 {
-
     private CityRepository $cityRepository;
     private RegisterService $registerService;
 
@@ -34,8 +33,13 @@ class RegisterController extends \yii\web\Controller
         ];
     }
 
-    public function __construct($id, $module, CityRepository $cityRepository, RegisterService $registerService, $config = [])
-    {
+    public function __construct(
+        $id,
+        $module,
+        CityRepository $cityRepository,
+        RegisterService $registerService,
+        $config = []
+    ) {
         $this->cityRepository = $cityRepository;
         $this->registerService = $registerService;
         parent::__construct($id, $module, $config = []);
@@ -78,5 +82,4 @@ class RegisterController extends \yii\web\Controller
             'model' => $model,
         ]);
     }
-
 }

@@ -10,7 +10,6 @@ use yii\data\Pagination;
 
 class TaskRepository
 {
-
     private const LIMIT_TASK_PER_PAGE = 5;
 
     public function find(int $id): Task

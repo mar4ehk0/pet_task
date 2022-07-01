@@ -68,6 +68,4 @@ class UserRegisterForm extends AbstractForm
     {
         return ArrayHelper::map($this->cityRepository->findAll(), 'id', 'name');
     }
-
-
 }

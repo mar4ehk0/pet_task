@@ -6,7 +6,6 @@ use yii\helpers\Url;
 
 class AcceptButton extends AbstractButtonBid
 {
-
     public function getName(): string
     {
         return 'Принять';

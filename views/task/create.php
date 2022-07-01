@@ -38,11 +38,11 @@ $statusPrice = ViewHelper::isValidAttribute('price', $model)  ? '' : 'is-invalid
     <?= $form->field($model, 'title')->textInput(['autofocus' => true]) ?>
     <?= $form->field($model, 'description')->textarea() ?>
     <?= $form->field($model, 'category_id')->dropDownList(
-            $model->getCategoryList(),
-            ['prompt' => '- Выбери категорию -']
+        $model->getCategoryList(),
+        ['prompt' => '- Выбери категорию -']
     ) ?>
     <?= $form->field($model, 'price')->textInput(
-            [ 'options' => ['class' => 'col-5 form-control ' . $statusPrice],]
+        [ 'options' => ['class' => 'col-5 form-control ' . $statusPrice],]
     ) ?>
     <?= $form->field($model, 'deadline')
         ->widget(

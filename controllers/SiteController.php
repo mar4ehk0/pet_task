@@ -18,7 +18,6 @@ use app\forms\ContactForm;
 
 class SiteController extends Controller
 {
-
     private UserRepository $userRepository;
     private UserService $userService;
 

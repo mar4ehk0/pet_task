@@ -6,7 +6,7 @@ use app\models\Bid;
 use app\models\Task;
 use yii\rbac\Rule;
 
-class CanDeclineBid  extends Rule
+class CanDeclineBid extends Rule
 {
     public $name = 'canDeclineBid';
 

@@ -3,6 +3,7 @@
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
 use yii\bootstrap4\Html;
+
 ?>
 
 <header>
@@ -36,5 +37,5 @@ use yii\bootstrap4\Html;
             ],
         ]);
         NavBar::end();
-    ?>
+        ?>
 </header>

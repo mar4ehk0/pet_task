@@ -34,8 +34,7 @@ class CreateTaskForm extends AbstractForm
         CityRepository $cityRepository,
         CategoryRepository $categoryRepository,
         $config = []
-    )
-    {
+    ) {
         parent::__construct($config);
         $this->cityRepository = $cityRepository;
         $this->categoryRepository = $categoryRepository;
@@ -83,7 +82,6 @@ class CreateTaskForm extends AbstractForm
             'files' => 'Файлы',
         ];
     }
-
 
     public function getCityList(): array
     {
