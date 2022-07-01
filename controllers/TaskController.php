@@ -84,9 +84,6 @@ class TaskController extends \yii\web\Controller
     {
         $user_id = \Yii::$app->user->identity->getId();
         $model = $this->taskService->getTaskPageView($id, $user_id);
-//        if (!Yii::$app->user->can('viewTask', ['task' => $model->getTask()])) {
-//            throw new ForbiddenHttpException();
-//        }
 
         return $this->render('view', [
             'model' => $model,
