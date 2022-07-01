@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\forms\CreateBidForm;
 use app\rbac\RBACManager;
+use app\repositories\BidRepository;
 use app\services\BidService;
 use Yii;
 use yii\filters\AccessControl;
@@ -11,6 +12,7 @@ use yii\filters\AccessControl;
 class BidController extends \yii\web\Controller
 {
     private BidService $bidService;
+    private BidRepository $bidRepository;
 
     public function behaviors()
     {
@@ -43,12 +45,14 @@ class BidController extends \yii\web\Controller
         $id,
         $module,
         BidService $bidService,
+        BidRepository $bidRepository,
         $config = []
     )
     {
         parent::__construct($id, $module, $config);
 
         $this->bidService = $bidService;
+        $this->bidRepository = $bidRepository;
     }
 
     public function actionCreate($id)
@@ -64,15 +68,23 @@ class BidController extends \yii\web\Controller
         return $this->render('bid', ['model' => $model]);
     }
 
-
     public function actionAccept($id)
     {
+        $bidDTO = $this->bidService->accept($id);
+        if ($bidDTO->result) {
+            Yii::$app->session->setFlash('success', 'Заявка выбрана.');
+        }
 
-        echo __FUNCTION__;
+        $this->redirect(['task/view', 'id' => $bidDTO->bid->task_id]);
     }
 
     public function actionDecline($id)
     {
-        echo __FUNCTION__;
+        $bidDTO = $this->bidService->decline($id);
+        if ($bidDTO->result) {
+            Yii::$app->session->setFlash('success', 'Заявка отклонена.');
+        }
+
+        $this->redirect(['task/view', 'id' => $bidDTO->bid->task_id]);
     }
 }
