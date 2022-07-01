@@ -7,6 +7,7 @@ use app\forms\FindTaskForm;
 use app\helpers\ListBidView;
 use app\helpers\SearchTaskView;
 use app\helpers\TaskPageView;
+use app\models\Bid;
 use app\models\File;
 use app\models\Task;
 use app\repositories\BidRepository;
@@ -131,6 +132,20 @@ class TaskService
         $data = $this->taskRepository->findByQuery($model);
 
         return new SearchTaskView($model, $data);
+    }
+
+    public function startTask(Bid $bid): bool
+    {
+        /** @var Task $task */
+        $task = $this->taskRepository->find($bid->task_id);
+        $task->status = Task::STATUS_IN_WORK;
+        $task->employee_id = $bid->employee_id;
+
+        $this->transactionManager->execute(function () use ($task) {
+            $this->taskRepository->save($task);
+        });
+
+        return true;
     }
 
 }
