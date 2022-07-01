@@ -3,6 +3,7 @@
 namespace app\rbac\rules;
 
 use app\models\Bid;
+use app\models\Task;
 use yii\rbac\Rule;
 
 class CanDeclineBid  extends Rule
@@ -24,6 +25,9 @@ class CanDeclineBid  extends Rule
         /** @var Bid $bid */
         $bid = $params['bid'];
 
-        return !$bid->is_declined;
+        /** @var Task $task */
+        $task = $bid->task;
+
+        return $task->status === Task::STATUS_NEW && !$bid->is_declined;
     }
 }

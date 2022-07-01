@@ -25,6 +25,6 @@ class CanAcceptBid extends Rule
         /** @var Bid $bid */
         $bid = $params['bid'];
 
-        return $bid->task->status === Task::STATUS_NEW && $bid->task->client_id === $userId;
+        return $bid->task->status === Task::STATUS_NEW && $bid->task->client_id === $userId && !$bid->is_declined;
     }
 }
