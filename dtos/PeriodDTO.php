@@ -3,6 +3,9 @@ namespace app\dtos;
 
 class PeriodDTO
 {
+
+
+
     public string $from;
     public string $to;
 
