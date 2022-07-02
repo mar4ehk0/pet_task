@@ -9,7 +9,6 @@ use app\repositories\TaskRepository;
 
 class FeedbackForm extends AbstractForm
 {
-
     public string $body = '';
     public int $grade = 0;
     public Task $task;

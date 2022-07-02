@@ -9,7 +9,6 @@ use yii\filters\AccessControl;
 
 class FeedbackController extends \yii\web\Controller
 {
-
     private FeedbackService $feedbackService;
 
     public function behaviors()
