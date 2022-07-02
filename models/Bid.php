@@ -60,4 +60,9 @@ class Bid extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Task::class, ['id' => 'task_id']);
     }
+
+    public function decline(): void
+    {
+        $this->is_declined = true;
+    }
 }

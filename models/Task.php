@@ -131,4 +131,10 @@ class Task extends \yii\db\ActiveRecord
     {
         $this->status = self::STATUS_COMPLETED;
     }
+
+    public function start(int $employee_id): void
+    {
+        $this->status = self::STATUS_IN_WORK;
+        $this->employee_id = $employee_id;
+    }
 }
