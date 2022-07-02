@@ -108,8 +108,4 @@ class TaskController extends \yii\web\Controller
     public function actionAbort($id)
     {
     }
-
-    public function actionComplete($id)
-    {
-    }
 }

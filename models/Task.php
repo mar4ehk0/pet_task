@@ -104,7 +104,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getClient()
     {
-        return $this->hasOne(Client::class, ['id' => 'client_id']);
+        return $this->hasOne(Client::class, ['user_id' => 'client_id']);
     }
 
     /**
@@ -114,7 +114,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getEmployee()
     {
-        return $this->hasOne(Employee::class, ['id' => 'employee_id']);
+        return $this->hasOne(Employee::class, ['user_id' => 'employee_id']);
     }
 
     /**
@@ -125,5 +125,10 @@ class Task extends \yii\db\ActiveRecord
     public function getFiles()
     {
         return $this->hasMany(File::class, ['task_id' => 'id']);
+    }
+
+    public function complete(): void
+    {
+        $this->status = self::STATUS_COMPLETED;
     }
 }
