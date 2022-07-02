@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "feedbacks".
  *
  * @property int $id
- * @property string $feedback
+ * @property string $body
  * @property int $grade
  * @property int $task_id
  * @property string $created
@@ -33,5 +33,15 @@ class Feedback extends \yii\db\ActiveRecord
     public function getTask()
     {
         return $this->hasOne(Task::class, ['id' => 'task_id']);
+    }
+
+    public static function create(string $body, int $grade, int $task_id): self
+    {
+        $feedback = new self();
+        $feedback->body = $body;
+        $feedback->grade = $grade;
+        $feedback->task_id = $task_id;
+        $feedback->created = (new \DateTime())->format('Y-m-d H:i:s');
+        return $feedback;
     }
 }

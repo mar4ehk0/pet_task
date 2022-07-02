@@ -13,6 +13,6 @@ class CompleteButtonTask extends AbstractButtonTask
 
     public function getUrl(): string
     {
-        return Url::to(['bid/create', 'id' => $this->task->id]);
+        return Url::to(['feedback/create', 'task_id' => $this->task->id]);
     }
 }
