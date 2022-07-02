@@ -69,21 +69,21 @@ class BidController extends \yii\web\Controller
 
     public function actionAccept($id)
     {
-        $bidDTO = $this->bidService->accept($id);
-        if ($bidDTO->result) {
+        $bid = $this->bidService->accept($id);
+        if ($bid) {
             Yii::$app->session->setFlash('success', 'Заявка выбрана.');
         }
 
-        $this->redirect(['task/view', 'id' => $bidDTO->bid->task_id]);
+        $this->redirect(['task/view', 'id' => $bid->task_id]);
     }
 
     public function actionDecline($id)
     {
-        $bidDTO = $this->bidService->decline($id);
-        if ($bidDTO->result) {
+        $bid = $this->bidService->decline($id);
+        if ($bid) {
             Yii::$app->session->setFlash('success', 'Заявка отклонена.');
         }
 
-        $this->redirect(['task/view', 'id' => $bidDTO->bid->task_id]);
+        $this->redirect(['task/view', 'id' => $bid->task_id]);
     }
 }

@@ -5,34 +5,31 @@ namespace app\services;
 use app\forms\FeedbackForm;
 use app\models\Feedback;
 use app\repositories\FeedbackRepository;
-use app\repositories\TaskRepository;
 
 class FeedbackService
 {
     private FeedbackRepository $feedbackRepository;
     private TransactionManager $transactionManager;
-    private TaskRepository $taskRepository;
+    private TaskService $taskService;
 
     public function __construct(
         FeedbackRepository $feedbackRepository,
-        TaskRepository $taskRepository,
+        TaskService $taskService,
         TransactionManager $transactionManager
     ) {
         $this->feedbackRepository = $feedbackRepository;
         $this->transactionManager = $transactionManager;
-        $this->taskRepository = $taskRepository;
+        $this->taskService = $taskService;
     }
 
     public function createFeedback(FeedbackForm $feedbackForm): bool
     {
         $feedback = Feedback::create($feedbackForm->body, $feedbackForm->grade, $feedbackForm->task->id);
-        // @TODO по событию передать чтобы задача завершилась если был создан успешно feedback
-        $task = $feedbackForm->task;
-        $task->complete();
+        $func = $this->taskService->completeTask($feedback);
 
-        $this->transactionManager->execute(function () use ($feedback, $task) {
+        $this->transactionManager->execute(function () use ($feedback, $func) {
             $this->feedbackRepository->add($feedback);
-            $this->taskRepository->save($task);
+            $func();
         });
 
         return true;

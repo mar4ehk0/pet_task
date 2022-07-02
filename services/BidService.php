@@ -39,19 +39,25 @@ class BidService
         return $bid;
     }
 
-    public function accept(int $id): BidResultDTO
+    public function accept(int $id): Bid
     {
         $bid = $this->bidRepository->find($id);
-        $result = $this->taskService->startTask($bid);
+        $func = $this->taskService->startTask($bid);
 
-        return new BidResultDTO($bid, $result);
+        $this->transactionManager->execute(function () use ($func) {
+            $func();
+        });
+
+        return $bid;
     }
 
-    public function decline(int $id): BidResultDTO
+    public function decline(int $id): Bid
     {
         $bid = $this->bidRepository->find($id);
-        $bid->is_declined = true;
-        $result = $this->bidRepository->save($bid);
-        return new BidResultDTO($bid, $result);
+        $bid->decline();
+        $this->transactionManager->execute(function () use ($bid) {
+            $this->bidRepository->save($bid);
+        });
+        return $bid;
     }
 }
