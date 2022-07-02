@@ -21,7 +21,7 @@ class m220702_083628_create_table_feedbacks extends Migration
             '{{%feedbacks}}',
             [
                 'id' => $this->primaryKey()->unsigned(),
-                'feedback' => $this->text()->notNull(),
+                'body' => $this->text()->notNull(),
                 'grade' => $this->integer()->notNull(),
                 'task_id' => $this->integer()->unsigned()->notNull(),
                 'created' => $this->dateTime()->notNull(),
