@@ -8,6 +8,7 @@ use app\helpers\ListBidView;
 use app\helpers\SearchTaskView;
 use app\helpers\TaskPageView;
 use app\models\Bid;
+use app\models\buttons\actions\AbortTaskAction;
 use app\models\buttons\actions\CancelTaskAction;
 use app\models\buttons\actions\CompleteTaskAction;
 use app\models\buttons\actions\StartTaskAction;
@@ -16,6 +17,7 @@ use app\models\File;
 use app\models\Task;
 use app\repositories\BidRepository;
 use app\repositories\CategoryRepository;
+use app\repositories\EmployeeRepository;
 use app\repositories\FileRepository;
 use app\repositories\TaskRepository;
 use app\repositories\UserRepository;
@@ -34,6 +36,7 @@ class TaskService
     private CategoryRepository $categoryRepository;
     private UserRepository $userRepository;
     private BidRepository $bidRepository;
+    private EmployeeRepository $employeeRepository;
 
     public function __construct(
         TaskRepository $taskRepository,
@@ -42,7 +45,8 @@ class TaskService
         FileStorage $fileStorage,
         TransactionManager $transactionManager,
         UserRepository $userRepository,
-        BidRepository $bidRepository
+        BidRepository $bidRepository,
+        EmployeeRepository $employeeRepository
     ) {
         $this->taskRepository = $taskRepository;
         $this->fileRepository = $fileRepository;
@@ -51,6 +55,7 @@ class TaskService
         $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
         $this->bidRepository = $bidRepository;
+        $this->employeeRepository = $employeeRepository;
     }
 
     public function create(CreateTaskForm $createTaskForm): Task
@@ -139,7 +144,6 @@ class TaskService
 
     public function startTask(Bid $bid): \Closure
     {
-
         $action = new StartTaskAction($bid, $this->taskRepository);
         return $action->do();
     }
@@ -150,12 +154,26 @@ class TaskService
         return $action->do();
     }
 
-    public function cancelTask(int $id)
+    public function cancelTask(int $id): void
     {
         $action = new CancelTaskAction($id, $this->taskRepository);
         $func = $action->do();
         $this->transactionManager->execute(function () use ($func) {
             $func();
+        });
+    }
+
+    public function abortTask(int $id): void
+    {
+        $action = new AbortTaskAction($id, $this->taskRepository);
+        $func = $action->do();
+
+        $employee_id = $action->getTask()->employee_id;
+        $employee = $this->employeeRepository->findByUserId($employee_id);
+        $employee->incNumFailedTask();
+        $this->transactionManager->execute(function () use ($func, $employee) {
+            $func();
+            $this->employeeRepository->save($employee);
         });
     }
 }

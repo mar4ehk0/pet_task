@@ -16,6 +16,7 @@ use Yii;
  * @property string|null $telegram
  * @property int $hide_contacts
  * @property float|null $rating
+ * @property int $num_failed_task
  *
  * @property User $user
  */
@@ -63,5 +64,10 @@ class Employee extends \yii\db\ActiveRecord
             return true;
         }
         return false;
+    }
+
+    public function incNumFailedTask(): void
+    {
+        $this->num_failed_task++;
     }
 }

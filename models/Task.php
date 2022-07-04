@@ -142,4 +142,9 @@ class Task extends \yii\db\ActiveRecord
     {
         $this->status = self::STATUS_CANCELED;
     }
+
+    public function abort(): void
+    {
+        $this->status = self::STATUS_FAILED;
+    }
 }

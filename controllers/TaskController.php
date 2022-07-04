@@ -22,7 +22,7 @@ class TaskController extends \yii\web\Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['create', 'clients', 'view', 'employees'],
+                'only' => ['create', 'clients', 'view', 'employees', 'cancel', 'abort'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -43,6 +43,16 @@ class TaskController extends \yii\web\Controller
                         'allow' => true,
                         'actions' => ['view'],
                         'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['cancel'],
+                        'roles' => [RBACManager::CLIENT],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['abort'],
+                        'roles' => [RBACManager::EMPLOYEE],
                     ],
                 ],
             ],
@@ -104,15 +114,12 @@ class TaskController extends \yii\web\Controller
     public function actionCancel($id)
     {
         $this->taskService->cancelTask($id);
-        $user_id = \Yii::$app->user->identity->getId();
-        $model = $this->taskService->getTaskPageView($id, $user_id);
-
-        return $this->render('view', [
-            'model' => $model,
-        ]);
+        $this->redirect(['task/view', 'id' => $id]);
     }
 
     public function actionAbort($id)
     {
+        $this->taskService->abortTask($id);
+        $this->redirect(['task/view', 'id' => $id]);
     }
 }
