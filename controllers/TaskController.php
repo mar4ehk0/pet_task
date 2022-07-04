@@ -103,6 +103,13 @@ class TaskController extends \yii\web\Controller
 
     public function actionCancel($id)
     {
+        $this->taskService->cancelTask($id);
+        $user_id = \Yii::$app->user->identity->getId();
+        $model = $this->taskService->getTaskPageView($id, $user_id);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
 
     public function actionAbort($id)

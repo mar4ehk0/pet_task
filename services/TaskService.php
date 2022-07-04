@@ -8,6 +8,9 @@ use app\helpers\ListBidView;
 use app\helpers\SearchTaskView;
 use app\helpers\TaskPageView;
 use app\models\Bid;
+use app\models\buttons\actions\CancelTaskAction;
+use app\models\buttons\actions\CompleteTaskAction;
+use app\models\buttons\actions\StartTaskAction;
 use app\models\Feedback;
 use app\models\File;
 use app\models\Task;
@@ -136,21 +139,23 @@ class TaskService
 
     public function startTask(Bid $bid): \Closure
     {
-        /** @var Task $task */
-        $task = $this->taskRepository->find($bid->task_id);
-        $task->start($bid->employee_id);
-        return function () use ($task) {
-            $this->taskRepository->save($task);
-        };
+
+        $action = new StartTaskAction($bid, $this->taskRepository);
+        return $action->do();
     }
 
     public function completeTask(Feedback $feedback): \Closure
     {
-        $task = $this->taskRepository->find($feedback->task_id);
-        $task->complete();
+        $action = new CompleteTaskAction($feedback, $this->taskRepository);
+        return $action->do();
+    }
 
-        return function () use ($task) {
-            $this->taskRepository->save($task);
-        };
+    public function cancelTask(int $id)
+    {
+        $action = new CancelTaskAction($id, $this->taskRepository);
+        $func = $action->do();
+        $this->transactionManager->execute(function () use ($func) {
+            $func();
+        });
     }
 }
