@@ -7,7 +7,6 @@ use app\repositories\TaskRepository;
 
 class CompleteTaskAction extends AbstractTaskAction
 {
-
     private Feedback $feedback;
 
     public function __construct(Feedback $feedback, TaskRepository $taskRepository)

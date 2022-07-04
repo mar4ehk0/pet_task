@@ -6,7 +6,6 @@ use app\repositories\TaskRepository;
 
 class CancelTaskAction extends AbstractTaskAction
 {
-
     private int $task_id;
 
     public function __construct(int $task_id, TaskRepository $taskRepository)

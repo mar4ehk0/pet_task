@@ -7,7 +7,6 @@ use app\repositories\TaskRepository;
 
 class StartTaskAction extends AbstractTaskAction
 {
-
     private Bid $bid;
 
     public function __construct(Bid $bid, TaskRepository $taskRepository)
@@ -15,7 +14,6 @@ class StartTaskAction extends AbstractTaskAction
         parent::__construct($taskRepository);
         $this->bid = $bid;
     }
-
 
     protected function getTaskId(): int
     {
