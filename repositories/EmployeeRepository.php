@@ -15,6 +15,14 @@ class EmployeeRepository
         return $employee;
     }
 
+    public function findByUserId(int $userId): Employee
+    {
+        if (!$employee = Employee::findOne(['user_id' => $userId])) {
+            throw new NotFoundException('Model not found.');
+        }
+        return $employee;
+    }
+
     public function add(Employee $employee): bool
     {
         if (!$employee->getIsNewRecord()) {

@@ -101,12 +101,11 @@ class RBACManager
 
     public function canShowAbortButton(User $user, Task $task)
     {
-        if (!$task->status !== Task::STATUS_IN_WORK) {
-            return false;
-        }
         // @TODO надо создать rbac Rule, надо проверить что задача находится в статсу STATUS_IN_WORK
         // и проверть что пользователя выбрали исполнителем
         // Yii::$app->user->can('createBid')
+        return Yii::$app->user->can(self::EMPLOYEE)
+            && Yii::$app->user->can(self::PERMISSION_ABORT_TASK, ['task' => $task]);
     }
 
     public function canShowBid(Bid $bid): bool

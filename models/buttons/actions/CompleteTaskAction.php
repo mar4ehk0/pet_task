@@ -11,8 +11,8 @@ class CompleteTaskAction extends AbstractTaskAction
 
     public function __construct(Feedback $feedback, TaskRepository $taskRepository)
     {
-        parent::__construct($taskRepository);
         $this->feedback = $feedback;
+        parent::__construct($taskRepository);
     }
 
     protected function getTaskId(): int

@@ -13,16 +13,21 @@ abstract class AbstractTaskAction
     public function __construct(TaskRepository $taskRepository)
     {
         $this->taskRepository = $taskRepository;
+        $this->task = $this->taskRepository->find($this->getTaskId());
     }
 
     public function do(): \Closure
     {
-        $this->task = $this->taskRepository->find($this->getTaskId());
         $task = $this->task;
         $this->action();
         return function () use ($task) {
             $this->taskRepository->save($task);
         };
+    }
+
+    public function getTask(): Task
+    {
+        return $this->task;
     }
 
     abstract protected function getTaskId(): int;

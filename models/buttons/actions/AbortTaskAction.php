@@ -4,7 +4,7 @@ namespace app\models\buttons\actions;
 
 use app\repositories\TaskRepository;
 
-class CancelTaskAction extends AbstractTaskAction
+class AbortTaskAction extends AbstractTaskAction
 {
     private int $task_id;
 
@@ -21,6 +21,6 @@ class CancelTaskAction extends AbstractTaskAction
 
     protected function action(): void
     {
-        $this->task->cancel();
+        $this->task->abort();
     }
 }

@@ -11,8 +11,8 @@ class StartTaskAction extends AbstractTaskAction
 
     public function __construct(Bid $bid, TaskRepository $taskRepository)
     {
-        parent::__construct($taskRepository);
         $this->bid = $bid;
+        parent::__construct($taskRepository);
     }
 
     protected function getTaskId(): int
