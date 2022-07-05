@@ -26,11 +26,14 @@ class EmployeeRegisterForm extends UserRegisterForm
         $rules = parent::rules();
         $rules[] = [['about', 'phone'], 'required'];
         $rules[] = [['telegram'], 'string', 'max' => 64];
-        $rules[] = ['categories_id', 'guardIsExistEachElementGategoriesId', 'skipOnEmpty' => false, 'skipOnError' => false];
+        $rules[] = ['categories_id',
+            'guardIsExistEachElementCategoriesId',
+            'skipOnEmpty' => false,
+            'skipOnError' => false];
         return $rules;
     }
 
-    public function guardIsExistEachElementGategoriesId($attribute, $params, $validator)
+    public function guardIsExistEachElementCategoriesId($attribute, $params, $validator)
     {
         if (!isset($this->{$attribute}) || !is_array($this->{$attribute})) {
             return false;
