@@ -44,7 +44,8 @@ class RegisterService
 //    public function createEmployee(EmployeeDTO $employeeDTO)
 //    {
 //        $user = User::create($employeeDTO->userDTO);
-//        $employee = Employee::create($user, $employeeDTO->about, $employeeDTO->contactDTO, $employeeDTO->categories_id);
+//        $employee = Employee::create($user,
+// $employeeDTO->about, $employeeDTO->contactDTO, $employeeDTO->categories_id);
 //        $this->transactionManager->execute(function () use ($user, $employee) {
 //            $this->userRepository->add($user);
 //            $this->employeeRepository->add($employee);
