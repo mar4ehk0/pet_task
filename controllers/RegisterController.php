@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\forms\ClientRegisterForm;
 use app\forms\EmployeeRegisterForm;
+use app\models\Employee;
+use app\repositories\CategoryRepository;
 use app\repositories\CityRepository;
 use app\services\dto\ClientDTO;
 use app\services\dto\ContactDTO;
@@ -17,6 +19,7 @@ class RegisterController extends \yii\web\Controller
 {
     private CityRepository $cityRepository;
     private RegisterService $registerService;
+    private CategoryRepository $categoryRepository;
 
     public function behaviors()
     {
@@ -38,25 +41,29 @@ class RegisterController extends \yii\web\Controller
         $module,
         CityRepository $cityRepository,
         RegisterService $registerService,
+        CategoryRepository $categoryRepository,
         $config = []
     ) {
+        parent::__construct($id, $module, $config = []);
         $this->cityRepository = $cityRepository;
         $this->registerService = $registerService;
-        parent::__construct($id, $module, $config = []);
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function actionEmployee()
     {
-        $model = new EmployeeRegisterForm($this->cityRepository);
+        $model = new EmployeeRegisterForm($this->categoryRepository, $this->cityRepository);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $this->registerService->createEmployee(
-                new EmployeeDTO(
-                    new UserDTO($model->name, $model->email, $model->password, $model->birthday, $model->city_id),
-                    $model->about,
-                    new ContactDTO($model->phone, $model->telegram)
-                )
-            );
+//            $this->registerService->createEmployee(
+//                new EmployeeDTO(
+//                    new UserDTO($model->name, $model->email, $model->password, $model->birthday, $model->city_id),
+//                    $model->about,
+//                    new ContactDTO($model->phone, $model->telegram),
+//                    $model->categories_id
+//                )
+//            );
+            $this->registerService->createEmployee($model);
             Yii::$app->session->setFlash('success', 'Исполнитель зарегестрирован.');
             $this->redirect(['site/login']);
         }
