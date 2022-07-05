@@ -19,6 +19,7 @@ use Yii;
  * @property int $num_failed_task
  *
  * @property User $user
+ * @property Category[] $categories
  */
 class Employee extends \yii\db\ActiveRecord
 {
@@ -40,7 +41,20 @@ class Employee extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public static function create(User $user, string $about, ContactDTO $contactDTO): Employee
+    public function getCategories()
+    {
+        return $this->hasMany(Category::class, ['id' => 'category_id'])
+            ->viaTable('categories_employees', ['employee_id' => 'id']);
+    }
+
+    /**
+     * @param User $user
+     * @param string $about
+     * @param ContactDTO $contactDTO
+     * @param Category[] $categories
+     * @return Employee
+     */
+    public static function create(User $user, string $about, ContactDTO $contactDTO, array $categories): Employee
     {
         $employee = new self();
         $employee->populateRelation('user', $user);
@@ -49,6 +63,7 @@ class Employee extends \yii\db\ActiveRecord
         $employee->telegram = $contactDTO->telegram;
         $employee->hide_contacts = false;
         $employee->rating = 0;
+        $employee->populateRelation('categories', $categories);
         return $employee;
     }
 
@@ -64,6 +79,18 @@ class Employee extends \yii\db\ActiveRecord
             return true;
         }
         return false;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $related = $this->getRelatedRecords();
+        if (isset($related['categories']) && $categories = $related['categories']) {
+            /** @var Category $category */
+            foreach ($categories as $category) {
+                $this->link('categories', $category);
+            }
+        }
     }
 
     public function incNumFailedTask(): void

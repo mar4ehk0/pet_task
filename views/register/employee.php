@@ -44,6 +44,7 @@ $statusBirthday = $model->isAgeValid() ? '' : 'is-invalid';
         )
     ?>
     <?= $form->field($model, 'city_id')->dropDownList($model->getCityList()) ?>
+    <?= $form->field($model, 'categories_id')->dropDownList($model->getCategoryList(), ['multiple'=>'multiple']) ?>
     <?= $form->field($model, 'about')->textarea() ?>
     <?= $form->field($model, 'phone')->textInput() ?>
     <?= $form->field($model, 'telegram')->textInput() ?>
