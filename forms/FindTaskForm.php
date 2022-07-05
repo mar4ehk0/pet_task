@@ -15,7 +15,7 @@ class FindTaskForm extends Model
     public const PERIOD_ANY = ['any' => 'Любой'];
 
     public array $categories = [];
-    public string $status = '';
+    public string $status = 'any';
     public string $period = '';
     private int $client_id = 0;
     private bool $is_employee = false;
